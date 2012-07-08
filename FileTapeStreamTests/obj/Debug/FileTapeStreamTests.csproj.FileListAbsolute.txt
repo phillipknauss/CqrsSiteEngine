@@ -1,0 +1,9 @@
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\obj\Debug\FileTapeStreamTests.csprojResolveAssemblyReference.cache
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\bin\Debug\FileTapeStreamTests.dll
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\bin\Debug\FileTapeStreamTests.pdb
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\bin\Debug\FileTapeStream.dll
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\bin\Debug\FileTapeStream.pdb
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\obj\Debug\FileTapeStreamTests.dll
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\obj\Debug\FileTapeStreamTests.pdb
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\bin\Debug\FileTapeStream_Accessor.dll
+D:\Projects\SimpleCqrsTwitter\FileTapeStreamTests\bin\Debug\FileTapeStream_Accessor.pdb

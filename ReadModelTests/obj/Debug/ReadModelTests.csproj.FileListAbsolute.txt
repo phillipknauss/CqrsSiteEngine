@@ -1,0 +1,17 @@
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\ReadModelTests.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\ReadModelTests.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\Events.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\Ncqrs.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\protobuf-net.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\ReadModel.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\Events.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\ReadModel.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\Ncqrs.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\Ncqrs.xml
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\protobuf-net.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\protobuf-net.xml
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\bin\Debug\Newtonsoft.Json.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\obj\Debug\ReadModelTests.csprojResolveAssemblyReference.cache
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\obj\Debug\ReadModelTests.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelTests\obj\Debug\ReadModelTests.pdb

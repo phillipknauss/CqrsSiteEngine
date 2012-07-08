@@ -1,0 +1,44 @@
+﻿@model ReadModel.UserIndexItem
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>UserIndexItem</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Username)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TimeStamp)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TimeStamp)
+    </div>
+
+    @if (Model.Properties != null)
+    {
+        foreach (var property in Model.Properties)
+        {
+            <div class="display-label">
+                @Html.DisplayName(property.Key)
+            </div>
+            <div class="display-field">
+                @property.Value
+            </div>
+        }
+    }
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { userId=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

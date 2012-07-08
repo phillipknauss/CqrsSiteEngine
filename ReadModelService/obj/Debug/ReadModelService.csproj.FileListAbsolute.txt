@@ -1,0 +1,17 @@
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\ReadModelService.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\ReadModelService.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\Ncqrs.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\ReadModel.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\Events.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\protobuf-net.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\Newtonsoft.Json.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\ReadModel.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\Ncqrs.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\Ncqrs.xml
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\Events.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\protobuf-net.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\protobuf-net.xml
+D:\Projects\SimpleCqrsTwitter\ReadModelService\bin\Newtonsoft.Json.pdb
+D:\Projects\SimpleCqrsTwitter\ReadModelService\obj\Debug\ReadModelService.csprojResolveAssemblyReference.cache
+D:\Projects\SimpleCqrsTwitter\ReadModelService\obj\Debug\ReadModelService.dll
+D:\Projects\SimpleCqrsTwitter\ReadModelService\obj\Debug\ReadModelService.pdb

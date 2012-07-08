@@ -1,0 +1,13 @@
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\Commands.dll
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\Commands.pdb
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\Ncqrs.dll
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\protobuf-net.dll
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\Ncqrs.pdb
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\Ncqrs.xml
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\Newtonsoft.Json.pdb
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\protobuf-net.pdb
+D:\Projects\SimpleCqrsTwitter\Commands\bin\Debug\protobuf-net.xml
+D:\Projects\SimpleCqrsTwitter\Commands\obj\Debug\Commands.csprojResolveAssemblyReference.cache
+D:\Projects\SimpleCqrsTwitter\Commands\obj\Debug\Commands.dll
+D:\Projects\SimpleCqrsTwitter\Commands\obj\Debug\Commands.pdb
