@@ -19,7 +19,6 @@ namespace Eventing
             BasePath = basePath;
 
             Streamer = new EventStreamer(new EventSerializer(MessagesProvider.GetKnownEventTypes()));
-            
         }
 
         #region EventStore
@@ -43,7 +42,7 @@ namespace Eventing
 
         public void Store(UncommittedEventStream eventStream)
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + eventStream.SourceId;
+            var sourcePath = string.Format("{0}{1}{2}", BasePath, Path.DirectorySeparatorChar, eventStream.SourceId);
 
             if (!Directory.Exists(BasePath))
             {
@@ -60,7 +59,7 @@ namespace Eventing
 
         public void StoreEmptyEventSource(Guid id)
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + id;
+            var sourcePath = string.Format("{0}{1}{2}", BasePath, Path.DirectorySeparatorChar, id);
             if (File.Exists(sourcePath))
             {
                 return;
@@ -74,7 +73,7 @@ namespace Eventing
 
         public void RemoveEmptyEventSource(Guid id)
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + id;
+            var sourcePath = string.Format("{0}{1}{2}", BasePath, Path.DirectorySeparatorChar, id);
             if (!File.Exists(sourcePath))
             {
                 return;
@@ -91,7 +90,7 @@ namespace Eventing
         public IEnumerable<ISourcedEvent> GetAllEvents(Guid id)
         {
         
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + id;
+            var sourcePath = string.Format("{0}{1}{2}", BasePath, Path.DirectorySeparatorChar, id);
 
             var tapeStream = new FileTapeStream.FileTapeStream(sourcePath);
             var records = tapeStream.ReadRecords();
@@ -140,7 +139,7 @@ namespace Eventing
 
         protected string GetSourcePath(IEventSource source)
         {
-            return BasePath + Path.DirectorySeparatorChar + source.EventSourceId;
+            return string.Format("{0}{1}{2}", BasePath, Path.DirectorySeparatorChar, source.EventSourceId);
         }
     }
 }

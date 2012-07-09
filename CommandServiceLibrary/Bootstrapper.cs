@@ -39,7 +39,7 @@ namespace CommandServiceLibrary
 
         private static ReadModel.IReadModelStore InitializeReadModelStore()
         {
-            return new ReadModel.ReadModelStore("D:\\store\\read_model");
+            return new ReadModel.DirectoryReadModelStore("D:\\store\\read_model");
         }
 
         private static IEventBus InitializeEventBus()

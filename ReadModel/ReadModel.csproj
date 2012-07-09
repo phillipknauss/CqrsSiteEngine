@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Channel\ChannelIndex.cs" />
     <Compile Include="Denormalizers\UserIndexDenormalizer.cs" />
+    <Compile Include="IReadModelStore.cs" />
     <Compile Include="User\UserIndex.cs" />
     <Compile Include="Denormalizers\ChannelIndexDenormalizer.cs" />
     <Compile Include="Denormalizers\TweetIndexItemDenormalizer.cs" />
@@ -74,7 +75,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ReadModelStore.cs" />
+    <Compile Include="DirectoryReadModelStore.cs" />
     <Compile Include="TweetIndexItem\TweetIndexItem.cs" />
     <Compile Include="User\UserProperty.cs" />
   </ItemGroup>

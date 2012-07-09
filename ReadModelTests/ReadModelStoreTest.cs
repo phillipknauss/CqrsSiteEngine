@@ -94,7 +94,7 @@ namespace ReadModelTests
             var expected = new FakeReadModel("TEST");
 
             Directory.CreateDirectory("store");
-            var store = new ReadModelStore("store");
+            var store = new DirectoryReadModelStore("store");
 
             store.Save(expected);
 
