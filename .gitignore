@@ -11,3 +11,5 @@ bin/
 _Resharper.*
 *.suo
 *.user
+App_Data/aspnet.mdf
+App_Data/aspnet_log.ldf
