@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="af41192e-ae24-46b0-848e-dc9221282876" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5229ce4d-50f4-4e42-9eae-dd33bf6c1a8a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -18,14 +18,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:20826/SimpleTwitterReadModelService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8732/Design_Time_Addresses/ReadModelServiceLibrary/Service1/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SimpleTwitterReadModelService.disco" MetadataType="Disco" ID="f21c3a30-671e-4eee-9093-8b5a75d3fe5a" SourceId="1" SourceUrl="http://localhost:20826/SimpleTwitterReadModelService.svc?disco" />
-    <MetadataFile FileName="SimpleTwitterReadModelService.xsd" MetadataType="Schema" ID="21c6773c-6f7a-4852-ad55-9364ed08abf6" SourceId="1" SourceUrl="http://localhost:20826/SimpleTwitterReadModelService.svc?xsd=xsd1" />
-    <MetadataFile FileName="SimpleTwitterReadModelService1.xsd" MetadataType="Schema" ID="64b452c2-f95b-49c9-9016-3b324e8163ad" SourceId="1" SourceUrl="http://localhost:20826/SimpleTwitterReadModelService.svc?xsd=xsd2" />
-    <MetadataFile FileName="SimpleTwitterReadModelService2.xsd" MetadataType="Schema" ID="3737de56-3c59-4025-aab9-6f597e8b00b6" SourceId="1" SourceUrl="http://localhost:20826/SimpleTwitterReadModelService.svc?xsd=xsd0" />
-    <MetadataFile FileName="SimpleTwitterReadModelService.wsdl" MetadataType="Wsdl" ID="807e6254-23e3-4c00-b985-27291e33fa83" SourceId="1" SourceUrl="http://localhost:20826/SimpleTwitterReadModelService.svc?wsdl" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d65eecf9-35b4-4af1-820a-c110e025b4f2" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/ReadModelServiceLibrary/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="fbb2e9d7-80ec-42ae-9d42-a56904ceddfd" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/ReadModelServiceLibrary/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="39915722-3a22-46a7-87fe-4c8947d2a064" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/ReadModelServiceLibrary/Service1/mex" />
+    <MetadataFile FileName="ReadModel.xsd" MetadataType="Schema" ID="330933c1-f6c2-44ac-9689-0101d2bd93a5" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/ReadModelServiceLibrary/Service1/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="c854880a-9083-4229-8ae5-8baee5233b7e" SourceId="1" SourceUrl="http://localhost:8732/Design_Time_Addresses/ReadModelServiceLibrary/Service1/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

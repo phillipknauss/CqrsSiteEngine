@@ -5,7 +5,7 @@ using Ncqrs.Eventing.ServiceModel.Bus;
 using Ncqrs.Eventing.Storage;
 using ReadModel.Denormalizers;
 
-namespace CommandService
+namespace CommandServiceLibrary
 {
     public static class Bootstrapper
     {

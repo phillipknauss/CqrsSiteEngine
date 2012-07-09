@@ -1,7 +1,7 @@
 ﻿using System.ServiceModel;
 using Commands;
 
-namespace CommandService
+namespace CommandServiceLibrary
 {
     [ServiceContract]
     public interface ISimpleTwitterCommandService

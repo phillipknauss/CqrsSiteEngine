@@ -1,6 +1,6 @@
 ﻿using Ncqrs;
 
-namespace ReadModelService
+namespace ReadModelServiceLibrary
 {
     public static class Bootstrapper
     {

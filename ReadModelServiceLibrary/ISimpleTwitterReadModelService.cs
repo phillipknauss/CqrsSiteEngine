@@ -2,7 +2,7 @@
 using System.ServiceModel;
 using ReadModel;
 
-namespace ReadModelService
+namespace ReadModelServiceLibrary
 {
     [ServiceContract]
     public interface ISimpleTwitterReadModelService
