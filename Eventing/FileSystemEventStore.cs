@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ncqrs.Eventing.Storage;
-using Ncqrs.Eventing;
-using ProtoBuf;
-using ProtoBuf.Meta;
 using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Security.Cryptography;
-using System.Globalization;
-using Events;
+using System.Linq;
+using Ncqrs.Eventing;
 using Ncqrs.Eventing.Sourcing;
+using Ncqrs.Eventing.Storage;
 
 namespace Eventing
 {
@@ -34,16 +26,15 @@ namespace Eventing
 
         public CommittedEventStream ReadFrom(Guid id, long minVersion, long maxVersion)
         {
-            List<CommittedEvent> events = new List<CommittedEvent>();
-
             var loadedEvents = GetAllEventsSinceVersion(id, minVersion);
 
             loadedEvents = loadedEvents.Where(n => n.EventSequence <= maxVersion).ToList();
 
-            foreach (var evt in loadedEvents)
-            {
-                events.Add(new CommittedEvent(Guid.NewGuid(), evt.EventIdentifier, id, evt.EventSequence, evt.EventTimeStamp, evt as object, evt.EventVersion));
-            }
+            List<CommittedEvent> events = loadedEvents
+                .Select(evt => new CommittedEvent(
+                    Guid.NewGuid(), evt.EventIdentifier, id, evt.EventSequence, 
+                    evt.EventTimeStamp, evt, evt.EventVersion))
+                .ToList();
 
             var stream = new CommittedEventStream(id, events);
 
@@ -52,7 +43,7 @@ namespace Eventing
 
         public void Store(UncommittedEventStream eventStream)
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + eventStream.SourceId.ToString();
+            var sourcePath = BasePath + Path.DirectorySeparatorChar + eventStream.SourceId;
 
             if (!Directory.Exists(BasePath))
             {
@@ -61,16 +52,15 @@ namespace Eventing
 
             var tapeStream = new FileTapeStream.FileTapeStream(sourcePath);
 
-            foreach (var evt in eventStream)
+            foreach (var record in eventStream.Select(evt => Streamer.SerializeEvent(evt.Payload as ISourcedEvent)))
             {
-                var record = Streamer.SerializeEvent(evt.Payload as ISourcedEvent);
                 tapeStream.Append(record);
             }
         }
 
         public void StoreEmptyEventSource(Guid id)
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + id.ToString();
+            var sourcePath = BasePath + Path.DirectorySeparatorChar + id;
             if (File.Exists(sourcePath))
             {
                 return;
@@ -84,7 +74,7 @@ namespace Eventing
 
         public void RemoveEmptyEventSource(Guid id)
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + id.ToString();
+            var sourcePath = BasePath + Path.DirectorySeparatorChar + id;
             if (!File.Exists(sourcePath))
             {
                 return;
@@ -92,7 +82,7 @@ namespace Eventing
 
             var events = GetAllEvents(id);
 
-            if (events.Count() == 0)
+            if (!events.Any())
             {
                 File.Delete(sourcePath);
             }
@@ -101,18 +91,12 @@ namespace Eventing
         public IEnumerable<ISourcedEvent> GetAllEvents(Guid id)
         {
         
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + id.ToString();
+            var sourcePath = BasePath + Path.DirectorySeparatorChar + id;
 
-            List<ISourcedEvent> events = new List<ISourcedEvent>();
-            
             var tapeStream = new FileTapeStream.FileTapeStream(sourcePath);
             var records = tapeStream.ReadRecords();
 
-            foreach (var rec in records)
-            {
-                var evt = Streamer.DeserializeEvent(rec.Data);
-                events.Add(evt);
-            }
+            List<ISourcedEvent> events = records.Select(rec => Streamer.DeserializeEvent(rec.Data)).ToList();
 
             // todo: Add caching
 
@@ -132,13 +116,9 @@ namespace Eventing
 
         public IEnumerable<Guid> GetEventSourceIndex()
         {
-            var sourceIds = Directory.GetFiles((this as FileSystemEventStore).BasePath);
+            var sourceIds = Directory.GetFiles(BasePath);
 
-            var fileInfos = new List<FileInfo>();
-            foreach (var id in sourceIds)
-            {
-                fileInfos.Add(new FileInfo(id));
-            }
+            var fileInfos = sourceIds.Select(id => new FileInfo(id)).ToList();
 
             fileInfos = fileInfos.OrderBy(n => n.LastWriteTimeUtc).ToList();
 
@@ -160,8 +140,7 @@ namespace Eventing
 
         protected string GetSourcePath(IEventSource source)
         {
-            return BasePath + Path.DirectorySeparatorChar + source.EventSourceId.ToString();
+            return BasePath + Path.DirectorySeparatorChar + source.EventSourceId;
         }
     }
-
 }

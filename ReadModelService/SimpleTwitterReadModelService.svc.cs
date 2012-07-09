@@ -1,10 +1,6 @@
-﻿using System;
-using Ncqrs;
-using Ncqrs.Commanding.ServiceModel;
-using ReadModel;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using ReadModel;
 
 namespace ReadModelService
 {

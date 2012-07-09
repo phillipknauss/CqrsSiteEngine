@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace FileTapeStream
@@ -10,12 +8,11 @@ namespace FileTapeStream
     {
         private readonly FileInfo _file;
 
-        private ITapeStreamSerializer _serializer;
+        private readonly ITapeStreamSerializer _serializer;
 
-        public FileTapeStream(string name) : this(name, new TapeStreamSerializer())
-        {
-            
-        }
+        public FileTapeStream(string name)
+            : this(name, new TapeStreamSerializer())
+        { }
 
         public FileTapeStream(string name, ITapeStreamSerializer serializer)
         {

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Dynamic;
 
 namespace UserInterface.Controllers
 {
@@ -72,7 +70,7 @@ namespace UserInterface.Controllers
             }
 
             var service = new ReadModelService.SimpleTwitterReadModelServiceClient();
-            var query = service.GetUsers().Where(n => n.Id == idGuid).SingleOrDefault();
+            var query = service.GetUsers().SingleOrDefault(n => n.Id == idGuid);
 
             return View(query);
         }
@@ -82,18 +80,18 @@ namespace UserInterface.Controllers
         {
             foreach (var property in item.Properties)
             {
-                SetProperty(new Commands.SetUserPropertyCommand()
-                {
+                SetProperty(new Commands.SetUserPropertyCommand
+                                {
                     UserID = item.Id,
                     Name = property.Key,
-                    Value = property.Value.Value.ToString()
+                    Value = property.Value.Value
                 });
             }
 
             return RedirectToAction("Details", new { id=item.Id });
         }
-        
-        void SetProperty(Commands.SetUserPropertyCommand command)
+
+        static void SetProperty(Commands.SetUserPropertyCommand command)
         {
             var service = new Commanding.SimpleTwitterCommandServiceClient();
             service.SetUserProperty(command);

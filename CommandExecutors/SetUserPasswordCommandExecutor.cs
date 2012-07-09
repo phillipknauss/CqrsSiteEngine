@@ -1,10 +1,10 @@
 ﻿using System;
-using Ncqrs.Commanding.CommandExecution;
-using Commands;
-using Ncqrs.Domain;
-using Domain;
 using System.Security.Cryptography;
 using System.Text;
+using Commands;
+using Domain;
+using Ncqrs.Commanding.CommandExecution;
+using Ncqrs.Domain;
 
 namespace CommandExecutors
 {
@@ -19,7 +19,7 @@ namespace CommandExecutors
             context.Accept();
         }
 
-        string EncodePassword(string originalPassword)
+        static string EncodePassword(string originalPassword)
         {
             //Declarations
             Byte[] originalBytes;
@@ -28,7 +28,7 @@ namespace CommandExecutors
 
             //Instantiate MD5CryptoServiceProvider, get bytes for original password and compute hash (encoded password)
             md5 = new MD5CryptoServiceProvider();
-            originalBytes = ASCIIEncoding.Default.GetBytes(originalPassword);
+            originalBytes = Encoding.Default.GetBytes(originalPassword);
             encodedBytes = md5.ComputeHash(originalBytes);
 
             //Convert encoded bytes back to a 'readable' string

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ProtoBuf;
 
 namespace ReadModel
@@ -15,7 +13,6 @@ namespace ReadModel
         public string Name { get; set; }
         [ProtoMember(4)]
         public DateTime TimeStamp { get; set; }
-        
     }
 
     [ProtoContract]
@@ -30,12 +27,7 @@ namespace ReadModel
 
         public object Get(string identifier)
         {
-            if (identifier != "items")
-            {
-                return null;
-            }
-
-            return Items;
+            return identifier != "items" ? null : Items;
         }
     }
 }

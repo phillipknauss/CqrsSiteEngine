@@ -1,4 +1,0 @@
-D:\Projects\SimpleCqrsTwitter\FileTapeStream\bin\Debug\FileTapeStream.dll
-D:\Projects\SimpleCqrsTwitter\FileTapeStream\bin\Debug\FileTapeStream.pdb
-D:\Projects\SimpleCqrsTwitter\FileTapeStream\obj\Debug\FileTapeStream.dll
-D:\Projects\SimpleCqrsTwitter\FileTapeStream\obj\Debug\FileTapeStream.pdb

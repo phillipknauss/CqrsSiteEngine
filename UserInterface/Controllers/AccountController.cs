@@ -1,30 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using UserInterface.Models;
 
 namespace UserInterface.Controllers
 {
-
     [Authorize]
     public class AccountController : Controller
     {
-
-        //
         // GET: /Account/LogOn
-
         [AllowAnonymous]
         public ActionResult LogOn()
         {
             return ContextDependentView();
         }
 
-        //
         // POST: /Account/JsonLogOn
-
         [AllowAnonymous]
         [HttpPost]
         public JsonResult JsonLogOn(LogOnModel model, string returnUrl)
@@ -36,19 +29,14 @@ namespace UserInterface.Controllers
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return Json(new { success = true, redirect = returnUrl });
                 }
-                else
-                {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                }
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
             }
 
             // If we got this far, something failed
             return Json(new { errors = GetErrorsFromModelState() });
         }
 
-        //
         // POST: /Account/LogOn
-
         [AllowAnonymous]
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
@@ -59,28 +47,18 @@ namespace UserInterface.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 
-                    if (Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return Url.IsLocalUrl(returnUrl)
+                               ? (ActionResult) Redirect(returnUrl)
+                               : RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                }
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
         // GET: /Account/LogOff
-
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
@@ -88,18 +66,14 @@ namespace UserInterface.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
         // GET: /Account/Register
-
         [AllowAnonymous]
         public ActionResult Register()
         {
             return ContextDependentView();
         }
 
-        //
         // POST: /Account/JsonRegister
-
         [AllowAnonymous]
         [HttpPost]
         public ActionResult JsonRegister(RegisterModel model)
@@ -115,19 +89,14 @@ namespace UserInterface.Controllers
                     FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
                     return Json(new { success = true });
                 }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
+                ModelState.AddModelError("", ErrorCodeToString(createStatus));
             }
 
             // If we got this far, something failed
             return Json(new { errors = GetErrorsFromModelState() });
         }
 
-        //
         // POST: /Account/Register
-
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Register(RegisterModel model)
@@ -143,27 +112,20 @@ namespace UserInterface.Controllers
                     FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
+                ModelState.AddModelError("", ErrorCodeToString(createStatus));
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
         // GET: /Account/ChangePassword
-
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
         // POST: /Account/ChangePassword
-
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
@@ -187,19 +149,14 @@ namespace UserInterface.Controllers
                 {
                     return RedirectToAction("ChangePasswordSuccess");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
-                }
+                ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
         // GET: /Account/ChangePasswordSuccess
-
         public ActionResult ChangePasswordSuccess()
         {
             return View();
@@ -213,11 +170,8 @@ namespace UserInterface.Controllers
                 ViewBag.FormAction = "Json" + actionName;
                 return PartialView();
             }
-            else
-            {
-                ViewBag.FormAction = actionName;
-                return View();
-            }
+            ViewBag.FormAction = actionName;
+            return View();
         }
 
         private IEnumerable<string> GetErrorsFromModelState()

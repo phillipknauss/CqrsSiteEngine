@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ProtoBuf;
-using System.Dynamic;
 
 namespace ReadModel
 {
@@ -131,12 +128,7 @@ namespace ReadModel
 
         public object Get(string identifier)
         {
-            if (identifier != "items")
-            {
-                return null;
-            }
-
-            return Items;
+            return identifier != "items" ? null : Items;
         }
     }
 }

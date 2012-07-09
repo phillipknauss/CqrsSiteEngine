@@ -10,10 +10,10 @@ namespace FileTapeStream
 {
     public class TapeStreamSerializer : ITapeStreamSerializer
     {
-        static byte[] ReadableHeaderStart = Encoding.UTF8.GetBytes("Start");
-        static byte[] ReadableHeaderEnd = Encoding.UTF8.GetBytes("Header-End");
-        static byte[] ReadableFooterStart = Encoding.UTF8.GetBytes("Footer-Start");
-        static byte[] ReadableFooterEnd = Encoding.UTF8.GetBytes("End");
+        static readonly byte[] ReadableHeaderStart = Encoding.UTF8.GetBytes("Start");
+        static readonly byte[] ReadableHeaderEnd = Encoding.UTF8.GetBytes("Header-End");
+        static readonly byte[] ReadableFooterStart = Encoding.UTF8.GetBytes("Footer-Start");
+        static readonly byte[] ReadableFooterEnd = Encoding.UTF8.GetBytes("End");
 
         static void WriteReadableInt64(BinaryWriter writer, long value)
         {
@@ -91,9 +91,9 @@ namespace FileTapeStream
             return hash;
         }
 
-        static void ReadAndVerifySignature(Stream source, byte[] signature, string name)
+        static void ReadAndVerifySignature(Stream source, IList<byte> signature, string name)
         {
-            for (var i = 0; i < signature.Length; i++)
+            for (var i = 0; i < signature.Count; i++)
             {
                 var readByte = source.ReadByte();
                 if (readByte == -1)

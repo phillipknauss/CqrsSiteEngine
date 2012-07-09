@@ -1,9 +1,6 @@
-﻿using System;
-using Events;
-using System.Collections.Generic;
-using ProtoBuf;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Events;
 using Ncqrs.Eventing.ServiceModel.Bus;
 
 namespace ReadModel.Denormalizers
@@ -23,12 +20,12 @@ namespace ReadModel.Denormalizers
 
             var items = model.Get("items") as List<UserIndexItem>;
 
-            items.Add(new UserIndexItem()
-            {
-                Id = evnt.EventSourceId,
-                Username = evnt.Name,
-                TimeStamp = evnt.TimeStamp
-            });
+            items.Add(new UserIndexItem
+                          {
+                              Id = evnt.EventSourceId,
+                              Username = evnt.Name,
+                              TimeStamp = evnt.TimeStamp
+                          });
 
             store.Save(model);
         }
@@ -54,8 +51,7 @@ namespace ReadModel.Denormalizers
             var items = model.Get("items") as List<UserIndexItem>;
 
             var toDelete = items.Where(n => n.Id == evnt.UserID).ToList();
-
-
+            
             foreach (var item in toDelete)
             {
                 items.Remove(item);
@@ -89,9 +85,7 @@ namespace ReadModel.Denormalizers
             //var item = items.Where(n => n.Id == evnt.UserID).SingleOrDefault();
 
             //if (item == null) { return; }
-
-
-
+            
             //store.Save(model);
         }
 
@@ -111,7 +105,7 @@ namespace ReadModel.Denormalizers
 
             var items = model.Get("items") as List<UserIndexItem>;
 
-            var item = items.Where(n => n.Id == evnt.Payload.UserID).SingleOrDefault();
+            var item = items.SingleOrDefault(n => n.Id == evnt.Payload.UserID);
 
             if (item == null)
             {
@@ -120,22 +114,24 @@ namespace ReadModel.Denormalizers
 
             if (!item.Properties.ContainsKey(evnt.Payload.Name))
             {
-                item.Properties.Add(evnt.Payload.Name, new UserProperty()
-                {
-                    Name = evnt.Payload.Name,
-                    Value = evnt.Payload.Value,
-                    Type = evnt.Payload.Type,
-                    Format = evnt.Payload.Format
-                });
+                item.Properties.Add(evnt.Payload.Name,
+                                    new UserProperty
+                                        {
+                                            Name = evnt.Payload.Name,
+                                            Value = evnt.Payload.Value,
+                                            Type = evnt.Payload.Type,
+                                            Format = evnt.Payload.Format
+                                        });
             }
 
-            item.Properties[evnt.Payload.Name] = new UserProperty()
-            {
-                Name = evnt.Payload.Name,
-                Value = evnt.Payload.Value,
-                Type = evnt.Payload.Type,
-                Format = evnt.Payload.Format
-            };
+            item.Properties[evnt.Payload.Name] =
+                new UserProperty
+                    {
+                        Name = evnt.Payload.Name,
+                        Value = evnt.Payload.Value,
+                        Type = evnt.Payload.Type,
+                        Format = evnt.Payload.Format
+                    };
 
             store.Save(model);
         }

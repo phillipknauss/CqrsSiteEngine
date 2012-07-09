@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ProtoBuf;
+﻿using ProtoBuf;
 
 namespace ReadModel
 {
@@ -20,13 +16,13 @@ namespace ReadModel
         {
             Name = name;
             Value = value;
-            this.Type = type;
+            Type = type;
             Format = format;
         }
 
         public override string ToString()
         {
-            return Value.ToString();
+            return Value;
         }
     }
 }

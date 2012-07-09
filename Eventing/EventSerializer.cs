@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using ProtoBuf.Meta;
 
 namespace Eventing
 {
-    public class EventSerializer : Eventing.IEventSerializer
+    public class EventSerializer : IEventSerializer
     {
         readonly IDictionary<Type, Formatter> _type2Contract = new Dictionary<Type, Formatter>();
         readonly IDictionary<string, Type> _contractName2Type = new Dictionary<string, Type>();
@@ -39,12 +38,11 @@ namespace Eventing
                             t.GetContractName(), formatter.Deserialize,
                             (o, stream) => formatter.Serialize(stream, o));
                     });
+
             _contractName2Type = knownEventTypes
                 .ToDictionary(
                     t => t.GetContractName(),
                     t => t);
-
-
         }
 
         public void Serialize(object instance, Type type, Stream destinationStream)

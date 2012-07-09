@@ -4,3 +4,8 @@ obj
 
 # mstest test results
 TestResults
+
+obj/
+bin/
+_Resharper.*
+*.suo

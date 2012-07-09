@@ -1,5 +1,4 @@
-﻿using System;
-namespace FileTapeStream
+﻿namespace FileTapeStream
 {
     public interface ITapeStreamSerializer
     {

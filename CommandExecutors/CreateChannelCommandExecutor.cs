@@ -1,8 +1,8 @@
 ﻿using System;
-using Ncqrs.Commanding.CommandExecution;
 using Commands;
-using Ncqrs.Domain;
 using Domain;
+using Ncqrs.Commanding.CommandExecution;
+using Ncqrs.Domain;
 
 namespace CommandExecutors
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ProtoBuf;
+﻿using ProtoBuf;
 
 namespace Domain
 {
@@ -20,7 +16,7 @@ namespace Domain
         {
             Name = name;
             Value = value;
-            this.Type = type;
+            Type = type;
             Format = format;
         }
     }

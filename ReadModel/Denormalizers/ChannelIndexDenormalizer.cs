@@ -1,9 +1,5 @@
-﻿using System;
-using Events;
+﻿using Events;
 using System.Collections.Generic;
-using ProtoBuf;
-using System.IO;
-using System.Linq;
 using Ncqrs.Eventing.ServiceModel.Bus;
 
 namespace ReadModel.Denormalizers
@@ -23,12 +19,12 @@ namespace ReadModel.Denormalizers
 
             var items = model.Get("items") as List<ChannelIndexItem>;
 
-            items.Add(new ChannelIndexItem()
-            {
-                Id = evnt.ID,
-                Name = evnt.Name,
-                TimeStamp = evnt.TimeStamp
-            });
+            items.Add(new ChannelIndexItem
+                          {
+                              Id = evnt.ID,
+                              Name = evnt.Name,
+                              TimeStamp = evnt.TimeStamp
+                          });
 
             store.Save(model);
         }
@@ -38,5 +34,4 @@ namespace ReadModel.Denormalizers
             Handle(evnt);
         }
     }
-
 }
