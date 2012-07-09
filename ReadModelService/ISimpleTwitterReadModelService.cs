@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using ReadModel;
-using System.Collections.Generic;
 
 namespace ReadModelService
 {

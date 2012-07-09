@@ -1,10 +1,4 @@
-﻿using System;
-using Ncqrs.Commanding.ServiceModel;
-using Ncqrs;
-using Ncqrs.Eventing.Storage;
-using Ncqrs.Eventing.Storage.SQL;
-using Ncqrs.Eventing.ServiceModel.Bus;
-using ReadModel.Denormalizers;
+﻿using Ncqrs;
 
 namespace ReadModelService
 {

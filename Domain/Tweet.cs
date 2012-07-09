@@ -1,6 +1,6 @@
 ﻿using System;
-using Ncqrs.Domain;
 using Events;
+using Ncqrs.Domain;
 
 namespace Domain
 {

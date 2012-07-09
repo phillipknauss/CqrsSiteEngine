@@ -1,7 +1,5 @@
 ﻿using System;
-using Ncqrs.Domain;
 using ProtoBuf;
-using Ncqrs.Eventing;
 using Ncqrs.Eventing.Sourcing;
 
 namespace Events
@@ -31,7 +29,7 @@ namespace Events
 
         public Guid GetID()
         {
-            return this.EventSourceId;
+            return EventSourceId;
         }
     }
 }

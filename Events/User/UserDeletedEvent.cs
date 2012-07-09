@@ -1,7 +1,5 @@
 ﻿using System;
-using Ncqrs.Domain;
 using ProtoBuf;
-using Ncqrs.Eventing;
 using Ncqrs.Eventing.Sourcing;
 
 namespace Events
@@ -17,11 +15,11 @@ namespace Events
         {
             get
             {
-                return this.EventSequence;
+                return EventSequence;
             }
             set
             {
-                this.ClaimEvent(UserID, value);
+                ClaimEvent(UserID, value);
             }
         }
 

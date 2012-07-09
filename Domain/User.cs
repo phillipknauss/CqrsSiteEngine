@@ -1,8 +1,7 @@
 ﻿using System;
-using Ncqrs.Domain;
-using Events;
 using System.Collections.Generic;
-using System.Linq;
+using Events;
+using Ncqrs.Domain;
 
 namespace Domain
 {
@@ -30,7 +29,7 @@ namespace Domain
 
         public void Delete(Guid userID)
         {
-            var e = new UserDeletedEvent(Guid.NewGuid(), Guid.Empty, this.Version+1, DateTime.UtcNow)
+            var e = new UserDeletedEvent(Guid.NewGuid(), Guid.Empty, Version+1, DateTime.UtcNow)
             {
                 UserID = userID,
                 TimeStamp = DateTime.UtcNow
@@ -54,7 +53,7 @@ namespace Domain
 
         public void SetPassword(Guid userID, string password)
         {
-            var e = new UserPasswordSetEvent(Guid.NewGuid(), Guid.Empty, this.Version + 1, DateTime.UtcNow)
+            var e = new UserPasswordSetEvent(Guid.NewGuid(), Guid.Empty, Version + 1, DateTime.UtcNow)
             {
                 UserID = userID,
                 Password = password,
@@ -83,23 +82,22 @@ namespace Domain
 
             if (!_properties.ContainsKey(e.Name))
             {
-                _properties.Add(e.Name, new UserProperty()
-                    {
-                        Name = e.Name,
-                        Value = e.Value,
-                        Type = e.Type,
-                        Format = e.Format
-                    });
+                _properties.Add(e.Name, new UserProperty
+                                            {
+                                                Name = e.Name,
+                                                Value = e.Value,
+                                                Type = e.Type,
+                                                Format = e.Format
+                                            });
             }
 
-            _properties[e.Name] = new UserProperty()
-            {
-                Name = e.Name,
-                Value = e.Value,
-                Type = e.Type,
-                Format = e.Format
-            };
-
+            _properties[e.Name] = new UserProperty
+                                      {
+                                          Name = e.Name,
+                                          Value = e.Value,
+                                          Type = e.Type,
+                                          Format = e.Format
+                                      };
         }
 
         protected void OnUserPasswordSet(UserPasswordSetEvent e)

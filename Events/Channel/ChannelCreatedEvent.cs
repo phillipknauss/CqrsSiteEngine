@@ -1,7 +1,5 @@
 ﻿using System;
-using Ncqrs.Domain;
 using ProtoBuf;
-using Ncqrs.Eventing;
 using Ncqrs.Eventing.Sourcing;
 
 namespace Events

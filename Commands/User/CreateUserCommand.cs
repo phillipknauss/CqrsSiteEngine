@@ -1,5 +1,4 @@
-﻿using System;
-using Ncqrs.Commanding;
+﻿using Ncqrs.Commanding;
 using Ncqrs.Commanding.CommandExecution.Mapping.Attributes;
 
 namespace Commands

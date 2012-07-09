@@ -1,8 +1,5 @@
-﻿using System;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using Commands;
-using System.ServiceModel.Web;
-using Ncqrs.Commanding;
 
 namespace CommandService
 {

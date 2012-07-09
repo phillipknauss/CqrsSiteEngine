@@ -1,9 +1,6 @@
-﻿using System;
-using Events;
-using System.Collections.Generic;
-using ProtoBuf;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Events;
 using Ncqrs.Eventing.ServiceModel.Bus;
 
 namespace ReadModel.Denormalizers
@@ -23,14 +20,14 @@ namespace ReadModel.Denormalizers
 
             var items = model.Get("items") as List<TweetIndexItem>;
 
-            items.Add(new TweetIndexItem()
-            {
-                Id = evnt.EventSourceId,
-                Message = evnt.Message,
-                Who = evnt.Who,
-                TimeStamp = evnt.TimeStamp,
-                Channel = evnt.Channel
-            });
+            items.Add(new TweetIndexItem
+                          {
+                              Id = evnt.EventSourceId,
+                              Message = evnt.Message,
+                              Who = evnt.Who,
+                              TimeStamp = evnt.TimeStamp,
+                              Channel = evnt.Channel
+                          });
 
             store.Save(model);
         }
@@ -57,8 +54,7 @@ namespace ReadModel.Denormalizers
             var items = model.Get("items") as List<TweetIndexItem>;
 
             var toDelete = items.Where(n => n.Id == evnt.TweetID).ToList();
-
-
+            
             foreach (var item in toDelete)
             {
                 items.Remove(item);
@@ -72,5 +68,4 @@ namespace ReadModel.Denormalizers
             Handle(evnt);
         }
     }
-
 }

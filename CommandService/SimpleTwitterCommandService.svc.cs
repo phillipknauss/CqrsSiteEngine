@@ -1,11 +1,6 @@
-﻿using System;
+﻿using Commands;
 using Ncqrs;
 using Ncqrs.Commanding.ServiceModel;
-using Commands;
-using Ncqrs.Eventing.Storage;
-using Eventing;
-using ReadModel;
-using Ncqrs.Commanding;
 
 namespace CommandService
 {

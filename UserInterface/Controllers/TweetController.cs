@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Commands;
-using UserInterface.Commanding;
 
 namespace UserInterface.Controllers
 {
@@ -18,21 +16,17 @@ namespace UserInterface.Controllers
             var service = new ReadModelService.SimpleTwitterReadModelServiceClient();
             var query = service.GetTweets();
 
-            var channels = new List<SelectListItem>();
+            var channels = service.GetChannels().Select(channel => new SelectListItem()
+                                                                       {
+                                                                           Text = channel.Name, 
+                                                                           Value = channel.Id.ToString()
+                                                                       }).ToList();
 
-            foreach (var channel in service.GetChannels())
-            {
-                channels.Add(new SelectListItem()
-                {
-                    Text = channel.Name,
-                    Value = channel.Id.ToString()
-                });
-            }
             ViewBag.Channels = channels;
 
             ViewBag.GetChannelName = new Func<string, string>(n =>
             {
-                var channel = channels.Where(m => m.Value == n).SingleOrDefault();
+                var channel = channels.SingleOrDefault(m => m.Value == n);
                 if (channel == null || channel.Value == Guid.Empty.ToString())
                 {
                     return "Default";
@@ -43,7 +37,7 @@ namespace UserInterface.Controllers
 
             ViewBag.GetChannelIdByName = new Func<string, Guid>(n =>
             {
-                var channel = channels.Where(m => m.Text == n).SingleOrDefault();
+                var channel = channels.SingleOrDefault(m => m.Text == n);
                 if (channel == null || channel.Value == Guid.Empty.ToString())
                 {
                     return Guid.Empty;
@@ -52,7 +46,7 @@ namespace UserInterface.Controllers
                 return Guid.Parse(channel.Value);
             });
 
-             if (channelname != null && channelname.Length > 0)
+             if (!string.IsNullOrEmpty(channelname))
             {
                 query = query.Where(n => n.Channel == ViewBag.GetChannelIdByName(channelname)).ToArray(); 
             }
