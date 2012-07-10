@@ -56,7 +56,7 @@ namespace FileReadModel
                 fileMode = FileMode.CreateNew;
             }
 
-            using (FileStream fs = new FileStream(sourcePath,fileMode, FileAccess.Write, FileShare.Read))
+            using (FileStream fs = new FileStream(sourcePath, fileMode, FileAccess.Write, FileShare.Read))
             {
                 Serializer.Serialize(fs, readModel);
             }

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Reflection;
@@ -15,24 +9,24 @@ namespace EventStoreExploreer
     {
         private string fileStore = null;
 
-        Eventing.FileSystemEventStore eventStore;
+        private Eventing.IExplorableEventStore store;
 
         public EventStoreExplorer()
         {
             InitializeComponent();
 
             fileStore = ConfigurationManager.AppSettings["EventStorePath"];
-            eventStore = new Eventing.FileSystemEventStore(fileStore);
+            store = new Eventing.FileSystemEventStore(fileStore);
         }
 
         private void selectEventStoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var result = OpenEventStoreDialog.ShowDialog();
 
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (result == DialogResult.OK)
             {
                 fileStore = OpenEventStoreDialog.SelectedPath;
-                eventStore = new Eventing.FileSystemEventStore(fileStore);
+                store = new Eventing.FileSystemEventStore(fileStore);
                 ConfigurationManager.AppSettings["EventStorePath"] = fileStore;
             }
         }
@@ -40,13 +34,13 @@ namespace EventStoreExploreer
         private void PopulateGrid()
         {
             treeView.Nodes.Clear();
-            if (fileStore == null || fileStore.Length == 0)
+            if (string.IsNullOrEmpty(fileStore))
             {
                 MessageBox.Show("Choose an event store first.");
                 return;
             }
 
-            var eventSources = eventStore.GetEventSourceIndex();
+            var eventSources = store.GetEventSourceIndex();
 
             foreach (var source in eventSources)
             {
@@ -56,35 +50,35 @@ namespace EventStoreExploreer
 
         private void AddSourceNodeToRoot(Guid source, TreeNodeCollection coll)
         {
-            var node = new TreeNode()
-            {
-                Name = source.ToString(),
-                Text = source.ToString()
-            };
+            var node = new TreeNode
+                           {
+                               Name = source.ToString(),
+                               Text = source.ToString()
+                           };
 
-            node.ContextMenu = new System.Windows.Forms.ContextMenu(
-                new MenuItem[]
-                {
-                    new MenuItem("Delete", new EventHandler( (sender, args) =>
-                        {
-                            var senderNode = ((sender as MenuItem).Parent.Tag as TreeNode);
-                            if (senderNode.Nodes.Count > 0)
-                            {
-                                MessageBox.Show("Nodes containing events cannot be deleted.");
-                                return;
-                            }
-                            eventStore.RemoveEmptyEventSource(Guid.Parse(node.Name));
-                            senderNode.Remove();
-                        })
-                    )
-                }
-            );
+            node.ContextMenu = new ContextMenu(
+                new[]
+                    {
+                        new MenuItem("Delete",
+                                     (sender, args) =>
+                                         {
+                                             var senderNode = ((sender as MenuItem).Parent.Tag as TreeNode);
+                                             if (senderNode.Nodes.Count > 0)
+                                             {
+                                                 MessageBox.Show("Nodes containing events cannot be deleted.");
+                                                 return;
+                                             }
+                                             store.RemoveEmptyEventSource(Guid.Parse(node.Name));
+                                             senderNode.Remove();
+                                         }
+                            )
+                    }
+                ) { Tag = node };
 
-            node.ContextMenu.Tag = node;
 
             coll.Add(node);
 
-            var events = eventStore.GetAllEvents(source);
+            var events = store.GetAllEvents(source);
             foreach (var evt in events)
             {
                 AddEvtNodeToSourceNode(evt, node);
@@ -93,12 +87,12 @@ namespace EventStoreExploreer
 
         private void AddEvtNodeToSourceNode(Ncqrs.Eventing.Sourcing.ISourcedEvent evt, TreeNode sourceNode)
         {
-            var evtNode = new TreeNode()
-            {
-                Name = evt.EventIdentifier.ToString(),
-                Text = evt.GetType().ToString(),
-                Tag = evt
-            };
+            var evtNode = new TreeNode
+                              {
+                                  Name = evt.EventIdentifier.ToString(),
+                                  Text = evt.GetType().ToString(),
+                                  Tag = evt
+                              };
 
             sourceNode.Nodes.Add(evtNode);
 
@@ -110,11 +104,11 @@ namespace EventStoreExploreer
 
         private void AddPropNodeToEvtNode(PropertyInfo prop, Ncqrs.Eventing.Sourcing.ISourcedEvent evt, TreeNode evtNode)
         {
-            var propNode = new TreeNode()
-            {
-                Name = prop.Name,
-                Text = prop.Name + ": " + prop.GetValue(evt, null)
-            };
+            var propNode = new TreeNode
+                               {
+                                   Name = prop.Name,
+                                   Text = prop.Name + ": " + prop.GetValue(evt, null)
+                               };
 
             evtNode.Nodes.Add(propNode);
         }
@@ -127,7 +121,7 @@ namespace EventStoreExploreer
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var source = Guid.NewGuid();
-            eventStore.StoreEmptyEventSource(source);
+            store.StoreEmptyEventSource(source);
 
             AddSourceNodeToRoot(source, treeView.Nodes);
 
@@ -136,10 +130,14 @@ namespace EventStoreExploreer
         private void EventStoreExplorer_Load(object sender, EventArgs e)
         {
             fileStore = ConfigurationManager.AppSettings["EventStorePath"];
-            eventStore = new Eventing.FileSystemEventStore(fileStore);
+            store = new Eventing.FileSystemEventStore(fileStore);
             PopulateGrid();
         }
 
-
+        private void selectAzureDevToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            store = new Eventing.AzureSystemEventStore();
+            PopulateGrid();
+        }
     }
 }

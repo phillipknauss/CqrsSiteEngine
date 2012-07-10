@@ -9,7 +9,6 @@ namespace AzureTapeStream
     public class AzureTapeStream : ITapeStream
     {
         private readonly CloudBlob _blob;
-        private readonly string _name;
         private readonly ITapeStreamSerializer _serializer;
         private readonly CloudBlobClient blobClient;
         private readonly CloudBlobContainer container;
@@ -20,7 +19,6 @@ namespace AzureTapeStream
 
         public AzureTapeStream(string name, string connectionString, string containerName, ITapeStreamSerializer serializer)
         {
-            _name = name;
             _serializer = serializer;
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);

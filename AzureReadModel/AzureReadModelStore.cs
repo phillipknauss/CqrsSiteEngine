@@ -32,7 +32,8 @@ namespace AzureReadModel
 
         public IReadModel GetOrCreate<T>()
         {
-            if (!File.Exists(GetName<T>()))
+            CloudBlob blob = container.GetBlobReference(GetName<T>());
+            if (!blob.Exists())
             {
                 var model = Activator.CreateInstance(typeof(T));
                 Save(model as IReadModel);
@@ -45,7 +46,7 @@ namespace AzureReadModel
         public void Save(IReadModel readModel)
         {
             CloudBlob blob = container.GetBlobReference(GetName(readModel.GetType().FullName));
-            blob.DeleteIfExists();
+            //blob.DeleteIfExists();
             
             using (var blobS = blob.OpenWrite())
             {
@@ -61,6 +62,29 @@ namespace AzureReadModel
         private static string GetName<T>()
         {
             return string.Format("{0}.ardmdl", typeof(T).FullName.ToLower());
+        }
+    }
+
+    public static class BlobExtensions
+    {
+        public static bool Exists(this CloudBlob blob)
+        {
+            try
+            {
+                blob.FetchAttributes();
+                return true;
+            }
+            catch (StorageClientException e)
+            {
+                if (e.ErrorCode == StorageErrorCode.ResourceNotFound)
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 }
