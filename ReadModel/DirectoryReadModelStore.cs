@@ -4,25 +4,20 @@ using ProtoBuf;
 
 namespace ReadModel
 {
-    public interface IReadModelStore
+    public class DirectoryReadModelStore : IReadModelStore
     {
-        IReadModel GetReadModel<T>();
-        IReadModel GetOrCreate<T>();
-        void Save(IReadModel readModel);
-    }
+        private const string _rdmdlExtension = ".rdmdl";
 
-    public class ReadModelStore : IReadModelStore
-    {
         public string BasePath { get; private set; }
 
-        public ReadModelStore(string basePath)
+        public DirectoryReadModelStore(string basePath)
         {
             BasePath = basePath;
         }
 
         public IReadModel GetReadModel<T>()
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + typeof(T).FullName + ".rdmdl";
+            var sourcePath = string.Format("{0}{1}{2}{3}", BasePath, Path.DirectorySeparatorChar, typeof(T).FullName, _rdmdlExtension);
 
             using (FileStream fs = new FileStream(sourcePath, FileMode.Open, FileAccess.Read))
             {
@@ -32,7 +27,7 @@ namespace ReadModel
 
         public IReadModel GetOrCreate<T>()
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + typeof(T).FullName + ".rdmdl";
+            var sourcePath = string.Format("{0}{1}{2}{3}", BasePath, Path.DirectorySeparatorChar, typeof(T).FullName, _rdmdlExtension);
 
             if (!File.Exists(sourcePath))
             {
@@ -46,7 +41,7 @@ namespace ReadModel
 
         public void Save(IReadModel readModel)
         {
-            var sourcePath = BasePath + Path.DirectorySeparatorChar + readModel.GetType().FullName + ".rdmdl";
+            var sourcePath = string.Format("{0}{1}{2}{3}", BasePath, Path.DirectorySeparatorChar, readModel.GetType().FullName, _rdmdlExtension);
 
             if (!Directory.Exists(BasePath))
             {

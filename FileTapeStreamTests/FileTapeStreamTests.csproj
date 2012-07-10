@@ -59,9 +59,16 @@
       <Project>{D15A6750-F46F-402E-94CB-45BDA21754F0}</Project>
       <Name>FileTapeStream</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TapeStream\TapeStream.csproj">
+      <Project>{B8BCFE9E-1A2B-4C77-8F97-FCC4E85DA0B7}</Project>
+      <Name>TapeStream</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\FileTapeStream.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Test References\TapeStream.accessor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

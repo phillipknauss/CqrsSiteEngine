@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.StorageClient;
 using TapeStream;
 
-namespace FileTapeStream
+namespace AzureTapeStream
 {
-    public class FileTapeStream : ITapeStream
+    public class AzureTapeStream : ITapeStream
     {
-        private readonly FileInfo _file;
-
+        private readonly CloudBlob _blob;
+        private readonly string _name;
         private readonly ITapeStreamSerializer _serializer;
+        private readonly CloudBlobClient blobClient;
+        private readonly CloudBlobContainer container;
 
-        public FileTapeStream(string name)
-            : this(name, new TapeStreamSerializer())
+        public AzureTapeStream(string name, string connectionString, string containerName)
+            : this(name, connectionString, containerName, new TapeStreamSerializer())
         { }
 
-        public FileTapeStream(string name, ITapeStreamSerializer serializer)
+        public AzureTapeStream(string name, string connectionString, string containerName, ITapeStreamSerializer serializer)
         {
-            _file = new FileInfo(name);
-
+            _name = name;
             _serializer = serializer;
-        }
 
-        private FileStream OpenForWrite()
-        {
-            return _file.Open(FileMode.Append, FileAccess.Write, FileShare.Read);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
+            blobClient = storageAccount.CreateCloudBlobClient();
+            container = blobClient.GetContainerReference(containerName);
+            container.CreateIfNotExist();
+            
+            _blob = container.GetBlobReference(name);
         }
 
         public void Append(byte[] buffer)
         {
-            using (var file = OpenForWrite())
+            using (var file = _blob.OpenWrite())
             {
                 var versionToWrite = 1;
                 _serializer.WriteRecord(file, buffer, versionToWrite);
             }
         }
 
-        private FileStream OpenForRead()
-        {
-            return _file.Open(FileMode.Open, FileAccess.Read);
-        }
-
         public IEnumerable<TapeRecord> ReadRecords()
         {
-            using (var file = OpenForRead())
+            using (var file = _blob.OpenRead())
             {
                 while (true)
                 {

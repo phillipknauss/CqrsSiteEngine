@@ -6,7 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Globalization;
 
-namespace FileTapeStream
+namespace TapeStream
 {
     public class TapeStreamSerializer : ITapeStreamSerializer
     {

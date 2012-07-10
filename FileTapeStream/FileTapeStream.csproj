@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileTapeStream.cs" />
-    <Compile Include="IFileTapeStream.cs" />
-    <Compile Include="ITapeStreamSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TapeRecord.cs" />
-    <Compile Include="TapeStreamSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TapeStream\TapeStream.csproj">
+      <Project>{B8BCFE9E-1A2B-4C77-8F97-FCC4E85DA0B7}</Project>
+      <Name>TapeStream</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
