@@ -36,7 +36,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A0D96179-63FC-4344-9C91-2BEFEE88DB99}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
-		SimpleCqrsTwitter.vsmdi = SimpleCqrsTwitter.vsmdi
+		SimpleCqrsEngine.vsmdi = SimpleCqrsEngine.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TapeStream", "TapeStream\Ta
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = SimpleCqrsTwitter.vsmdi
+		CategoryFile = SimpleCqrsEngine.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

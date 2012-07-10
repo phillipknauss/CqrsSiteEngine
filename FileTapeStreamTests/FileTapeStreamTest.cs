@@ -1,24 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using FileTapeStream;
 using System.IO;
 using System.Text;
 using TapeStream;
 
 namespace FileTapeStreamTests
 {
-    
-    
     /// <summary>
     ///This is a test class for FileTapeStreamTest and is intended
     ///to contain all FileTapeStreamTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestClass]
     public class FileTapeStreamTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -91,15 +85,15 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for Append and ReadRecords
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         public void AppendAndReadRecordsTest()
         {
             var target = new FileTapeStream.FileTapeStream("test", new FakeTapeStreamSerializer());
 
-            target.Append(Encoding.ASCII.GetBytes("Some test data"));
+            const string expected = "Some test data";
 
-            var expected = "Some test data";
-
+            target.Append(Encoding.ASCII.GetBytes(expected));
+            
             IEnumerable<TapeRecord> records = target.ReadRecords();
             
             var items = new List<TapeRecord>(records);
