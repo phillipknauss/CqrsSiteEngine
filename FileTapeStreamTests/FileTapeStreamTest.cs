@@ -31,35 +31,32 @@ namespace FileTapeStreamTests
             }
         }
 
-        #region Additional test attributes
-        // 
         //You can use the following additional attributes as you write your tests:
-        //
         //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
+        [ClassInitialize]
+        public static void MyClassInitialize(TestContext testContext)
+        {
+        }
+
         //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
+        [ClassCleanup]
+        public static void MyClassCleanup()
+        {
+        }
+
         //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
+        [TestInitialize]
+        public void MyTestInitialize()
+        {
+        }
+
         //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
+        [TestCleanup]
+        public void MyTestCleanup()
+        {
+            if (File.Exists("test"))
+                File.Delete("test");
+        }
 
         public class FakeTapeStreamSerializer : ITapeStreamSerializer
         {
@@ -93,9 +90,9 @@ namespace FileTapeStreamTests
             const string expected = "Some test data";
 
             target.Append(Encoding.ASCII.GetBytes(expected));
-            
+
             IEnumerable<TapeRecord> records = target.ReadRecords();
-            
+
             var items = new List<TapeRecord>(records);
 
             var actual = Encoding.ASCII.GetString(items[0].Data);
