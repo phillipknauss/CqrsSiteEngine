@@ -24,10 +24,9 @@ namespace AzureReadModel
         {
             CloudBlob blob = container.GetBlobReference(GetName<T>());
 
-            using (MemoryStream ms = new MemoryStream())
+            using (var blobS = blob.OpenRead())
             {
-                blob.DownloadToStream(ms);
-                return Serializer.Deserialize<T>(ms) as IReadModel;
+                return Serializer.Deserialize<T>(blobS) as IReadModel;
             }
         }
 
@@ -46,24 +45,22 @@ namespace AzureReadModel
         public void Save(IReadModel readModel)
         {
             CloudBlob blob = container.GetBlobReference(GetName(readModel.GetType().FullName));
-
-            using (MemoryStream ms = new MemoryStream())
+            blob.DeleteIfExists();
+            
+            using (var blobS = blob.OpenWrite())
             {
-                Serializer.Serialize(ms, readModel);
-                blob.DeleteIfExists();
-                blob.UploadFromStream(ms);
-                ms.Close();
+                Serializer.Serialize(blobS,readModel);
             }
         }
 
         private static string GetName(string fullName)
         {
-            return string.Format("{0}.rdmdl", fullName.ToLower());
+            return string.Format("{0}.ardmdl", fullName.ToLower());
         }
 
         private static string GetName<T>()
         {
-            return string.Format("{0}.rdmdl", typeof(T).FullName.ToLower());
+            return string.Format("{0}.ardmdl", typeof(T).FullName.ToLower());
         }
     }
 }
