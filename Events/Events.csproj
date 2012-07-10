@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ncqrs">
-      <HintPath>..\..\External\ncqrs\Ncqrs.dll</HintPath>
+      <HintPath>..\Requirements\Ncqrs.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\..\External\protobuf-net\net40\protobuf-net.dll</HintPath>
+      <HintPath>..\Requirements\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

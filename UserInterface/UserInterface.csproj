@@ -46,7 +46,7 @@
       <HintPath>..\packages\Microsoft.Web.Optimization.0.1\lib\net40\Microsoft.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="Ncqrs">
-      <HintPath>..\..\External\ncqrs\Ncqrs.dll</HintPath>
+      <HintPath>..\Requirements\Ncqrs.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -167,30 +167,28 @@
     <None Include="Properties\DataSources\ReadModel.ChannelIndexItem.datasource" />
     <None Include="Properties\DataSources\ReadModel.TweetIndexItem.datasource" />
     <None Include="Properties\DataSources\ReadModel.UserIndexItem.datasource" />
-    <None Include="Service References\Commanding\SimpleTwitterCommandService.wsdl" />
-    <None Include="Service References\Commanding\SimpleTwitterCommandService.xsd">
+    <None Include="Service References\Commanding\Commands.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Commanding\SimpleTwitterCommandService1.xsd">
+    <None Include="Service References\Commanding\Ncqrs.Commanding.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Commanding\SimpleTwitterCommandService2.xsd">
+    <None Include="Service References\Commanding\service.wsdl" />
+    <None Include="Service References\Commanding\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\Commanding\SimpleTwitterCommandService3.xsd">
+    <None Include="Service References\Commanding\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ReadModelService\SimpleTwitterReadModelService.disco" />
-    <None Include="Service References\ReadModelService\configuration91.svcinfo" />
-    <None Include="Service References\ReadModelService\configuration.svcinfo" />
-    <None Include="Service References\ReadModelService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\Commanding\SimpleTwitterCommandService.disco" />
     <None Include="Service References\Commanding\configuration91.svcinfo" />
     <None Include="Service References\Commanding\configuration.svcinfo" />
     <None Include="Service References\Commanding\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ReadModelService\configuration91.svcinfo" />
+    <None Include="Service References\ReadModelService\configuration.svcinfo" />
+    <None Include="Service References\ReadModelService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -229,22 +227,25 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Tweet\Add.cshtml" />
     <Content Include="Views\Tweet\Index.cshtml" />
-    <None Include="Service References\ReadModelService\SimpleTwitterReadModelService.wsdl" />
-    <None Include="Service References\ReadModelService\SimpleTwitterReadModelService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ReadModelService\SimpleTwitterReadModelService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ReadModelService\SimpleTwitterReadModelService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Channel\Add.cshtml" />
     <Content Include="Views\Channel\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Add.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
+    <None Include="Service References\ReadModelService\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ReadModelService\ReadModel.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ReadModelService\service.wsdl" />
+    <None Include="Service References\ReadModelService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ReadModelService\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
