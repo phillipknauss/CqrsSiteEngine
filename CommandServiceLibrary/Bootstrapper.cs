@@ -1,4 +1,5 @@
 ﻿using CommandExecutors;
+using FileReadModel;
 using Ncqrs;
 using Ncqrs.Commanding.ServiceModel;
 using Ncqrs.Eventing.ServiceModel.Bus;
@@ -39,7 +40,7 @@ namespace CommandServiceLibrary
 
         private static ReadModel.IReadModelStore InitializeReadModelStore()
         {
-            return new ReadModel.DirectoryReadModelStore("D:\\store\\read_model");
+            return new DirectoryReadModelStore("D:\\store\\read_model");
         }
 
         private static IEventBus InitializeEventBus()

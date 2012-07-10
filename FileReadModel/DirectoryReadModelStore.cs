@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using ProtoBuf;
+using ReadModel;
 
-namespace ReadModel
+namespace FileReadModel
 {
     public class DirectoryReadModelStore : IReadModelStore
     {

@@ -1,4 +1,5 @@
-﻿using Ncqrs;
+﻿using FileReadModel;
+using Ncqrs;
 
 namespace ReadModelServiceLibrary
 {
@@ -11,7 +12,7 @@ namespace ReadModelServiceLibrary
 
         private static ReadModel.IReadModelStore InitializeReadModelStore()
         {
-            return new ReadModel.DirectoryReadModelStore("D:\\store\\read_model");
+            return new DirectoryReadModelStore("D:\\store\\read_model");
         }
 
     }

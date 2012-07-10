@@ -1,4 +1,5 @@
-﻿using ReadModel;
+﻿using FileReadModel;
+using ReadModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.Serialization;
 using System.IO;

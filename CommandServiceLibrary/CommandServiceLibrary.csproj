@@ -71,6 +71,10 @@
       <Project>{DE2CBE6B-81F4-4CA5-9242-0185FDD19B97}</Project>
       <Name>Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FileReadModel\FileReadModel.csproj">
+      <Project>{04EBD693-E437-4459-9337-3BCDAA0C9921}</Project>
+      <Name>FileReadModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReadModel\ReadModel.csproj">
       <Project>{5FE14058-A03C-4EAE-97A3-F6CF208D8F7A}</Project>
       <Name>ReadModel</Name>
