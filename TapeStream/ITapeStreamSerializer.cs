@@ -1,4 +1,4 @@
-﻿namespace FileTapeStream
+﻿namespace TapeStream
 {
     public interface ITapeStreamSerializer
     {

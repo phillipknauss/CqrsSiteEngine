@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FileTapeStream;
 using System.IO;
 using System.Text;
+using TapeStream;
 
 namespace FileTapeStreamTests
 {
@@ -66,7 +67,7 @@ namespace FileTapeStreamTests
         //
         #endregion
 
-        public class FakeTapeStreamSerializer : FileTapeStream.ITapeStreamSerializer
+        public class FakeTapeStreamSerializer : ITapeStreamSerializer
         {
             public void WriteRecord(Stream stream, byte[] data, long versionToWrite)
             {
