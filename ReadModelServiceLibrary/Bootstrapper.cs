@@ -1,4 +1,6 @@
-﻿using Ncqrs;
+﻿using AzureReadModel;
+using Ncqrs;
+using ReadModelServiceLibrary.Properties;
 
 namespace ReadModelServiceLibrary
 {
@@ -11,8 +13,7 @@ namespace ReadModelServiceLibrary
 
         private static ReadModel.IReadModelStore InitializeReadModelStore()
         {
-            return new ReadModel.DirectoryReadModelStore("D:\\store\\read_model");
+            return new AzureReadModelStore(Settings.Default.AzureConnectionString, Settings.Default.AzureContainerName);
         }
-
     }
 }

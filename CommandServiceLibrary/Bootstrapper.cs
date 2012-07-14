@@ -1,5 +1,6 @@
-﻿using CommandExecutors;
-using Ncqrs;
+﻿using AzureReadModel;
+using CommandExecutors;
+using CommandServiceLibrary.Properties;
 using Ncqrs.Commanding.ServiceModel;
 using Ncqrs.Eventing.ServiceModel.Bus;
 using Ncqrs.Eventing.Storage;
@@ -11,10 +12,10 @@ namespace CommandServiceLibrary
     {
         public static void BootUp()
         {
-            NcqrsEnvironment.SetDefault<ICommandService>(InitializeCommandService());
-            NcqrsEnvironment.SetDefault<IEventStore>(InitializeEventStore());
-            NcqrsEnvironment.SetDefault<ReadModel.IReadModelStore>(InitializeReadModelStore());
-            NcqrsEnvironment.SetDefault<IEventBus>(InitializeEventBus());
+            Ncqrs.NcqrsEnvironment.SetDefault<ICommandService>(InitializeCommandService());
+            Ncqrs.NcqrsEnvironment.SetDefault<IEventStore>(InitializeEventStore());
+            Ncqrs.NcqrsEnvironment.SetDefault<ReadModel.IReadModelStore>(InitializeReadModelStore());
+            Ncqrs.NcqrsEnvironment.SetDefault<IEventBus>(InitializeEventBus());
         }
 
         private static ICommandService InitializeCommandService()
@@ -34,12 +35,12 @@ namespace CommandServiceLibrary
         private static IEventStore InitializeEventStore()
         {
             //return new SimpleMicrosoftSqlServerEventStore("Data Source=.\\SQLEXPRESS;Integrated Security=SSPI;User Instance=True;AttachDbFilename=|DataDirectory|\\EventStore.mdf;");
-            return new Eventing.FileSystemEventStore("D:\\store\\event_store");
+            return new Eventing.AzureSystemEventStore();
         }
 
         private static ReadModel.IReadModelStore InitializeReadModelStore()
         {
-            return new ReadModel.DirectoryReadModelStore("D:\\store\\read_model");
+            return new AzureReadModelStore(Settings.Default.AzureConnectionString, Settings.Default.AzureContainerName);
         }
 
         private static IEventBus InitializeEventBus()

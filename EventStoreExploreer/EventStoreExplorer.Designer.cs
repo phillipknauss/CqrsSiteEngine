@@ -37,6 +37,7 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenEventStoreDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.treeView = new System.Windows.Forms.TreeView();
+            this.selectAzureDevToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +56,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectEventStoreToolStripMenuItem});
+            this.selectEventStoreToolStripMenuItem,
+            this.selectAzureDevToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -93,7 +95,7 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
@@ -108,6 +110,13 @@
             this.treeView.Name = "treeView";
             this.treeView.Size = new System.Drawing.Size(784, 576);
             this.treeView.TabIndex = 1;
+            // 
+            // selectAzureDevToolStripMenuItem
+            // 
+            this.selectAzureDevToolStripMenuItem.Name = "selectAzureDevToolStripMenuItem";
+            this.selectAzureDevToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.selectAzureDevToolStripMenuItem.Text = "Select Azure Dev";
+            this.selectAzureDevToolStripMenuItem.Click += new System.EventHandler(this.selectAzureDevToolStripMenuItem_Click);
             // 
             // EventStoreExplorer
             // 
@@ -138,6 +147,7 @@
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eventSourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectAzureDevToolStripMenuItem;
     }
 }
 
