@@ -20,6 +20,10 @@ Library Dependencies
 1. ProtoBuf-net 2.0.0.480
 2. Ncqrs github pull from 7/5/2012
 
+Optional Dependencies:
+
+By default, the project uses AzureReadModelStore and AzureSystemEventStore, which require the June 2012 (or newer) version of the Azure SDK. If you do not wish to use Azure Blobs for store, FileReadModelStore and FileSystemEventStore can be used instead.
+
 References:
 
 Primary - How we got rid of the Database on Los Techies - http://lostechies.com/gabrielschenker/2012/06/12/how-we-got-rid-of-the-database/
