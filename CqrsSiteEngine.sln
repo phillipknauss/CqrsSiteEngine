@@ -36,7 +36,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A0D96179-63FC-4344-9C91-2BEFEE88DB99}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
-		SimpleCqrsTwitter.vsmdi = SimpleCqrsTwitter.vsmdi
+		SimpleCqrsEngine.vsmdi = SimpleCqrsEngine.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
@@ -52,9 +52,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTapeStream", "AzureTap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TapeStream", "TapeStream\TapeStream.csproj", "{B8BCFE9E-1A2B-4C77-8F97-FCC4E85DA0B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureTapeStreamTests", "AzureTapeStreamTests\AzureTapeStreamTests.csproj", "{8B757057-27B4-4365-8C15-1BB94F7AB870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureReadModelTests", "AzureReadModelTests\AzureReadModelTests.csproj", "{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = SimpleCqrsTwitter.vsmdi
+		CategoryFile = SimpleCqrsEngine.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +229,26 @@ Global
 		{B8BCFE9E-1A2B-4C77-8F97-FCC4E85DA0B7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B8BCFE9E-1A2B-4C77-8F97-FCC4E85DA0B7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B8BCFE9E-1A2B-4C77-8F97-FCC4E85DA0B7}.Release|x86.ActiveCfg = Release|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8B757057-27B4-4365-8C15-1BB94F7AB870}.Release|x86.ActiveCfg = Release|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -246,5 +270,7 @@ Global
 		{C77A0B02-2751-4624-B1F1-0D395E676C88} = {CF0D1CB5-9F6E-482A-84E8-EF97A9B7CEC1}
 		{A0D96179-63FC-4344-9C91-2BEFEE88DB99} = {CF0D1CB5-9F6E-482A-84E8-EF97A9B7CEC1}
 		{0B8E0E59-F096-42AB-B3AF-FD3F3B52B39B} = {CF0D1CB5-9F6E-482A-84E8-EF97A9B7CEC1}
+		{8B757057-27B4-4365-8C15-1BB94F7AB870} = {CF0D1CB5-9F6E-482A-84E8-EF97A9B7CEC1}
+		{A3AF50F0-7A3E-40C9-B8D8-DEF6BBCDF87B} = {CF0D1CB5-9F6E-482A-84E8-EF97A9B7CEC1}
 	EndGlobalSection
 EndGlobal

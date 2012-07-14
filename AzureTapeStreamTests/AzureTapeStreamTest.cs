@@ -1,19 +1,30 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
+using AzureTapeStream;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.StorageClient;
 using TapeStream;
+using System.Collections.Generic;
 
-namespace FileTapeStreamTests
+namespace AzureTapeStreamTests
 {
+
+
     /// <summary>
-    ///This is a test class for FileTapeStreamTest and is intended
-    ///to contain all FileTapeStreamTest Unit Tests
+    ///This is a test class for AzureTapeStreamTest and is intended
+    ///to contain all AzureTapeStreamTest Unit Tests
     ///</summary>
-    [TestClass]
-    public class FileTapeStreamTest
+    [TestClass()]
+    public class AzureTapeStreamTest
     {
+        private const string DevConnectionString = "UseDevelopmentStorage=true";
+        private const string TestContainerName = "testtapecontainer";
+        
         private TestContext testContextInstance;
+        private static CloudBlobClient blobClient;
+        private static CloudBlobContainer container;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -33,29 +44,33 @@ namespace FileTapeStreamTests
 
         //You can use the following additional attributes as you write your tests:
         //Use ClassInitialize to run code before running the first test in the class
-        [ClassInitialize]
+        [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(DevConnectionString);
+            blobClient = storageAccount.CreateCloudBlobClient();
+            container = blobClient.GetContainerReference(TestContainerName);
+            container.CreateIfNotExist();
         }
-
+        
         //Use ClassCleanup to run code after all tests in a class have run
-        [ClassCleanup]
+        [ClassCleanup()]
         public static void MyClassCleanup()
         {
+            container.Delete();
         }
-
+        
         //Use TestInitialize to run code before running each test
-        [TestInitialize]
+        [TestInitialize()]
         public void MyTestInitialize()
         {
         }
-
+        
         //Use TestCleanup to run code after each test has run
-        [TestCleanup]
+        [TestCleanup()]
         public void MyTestCleanup()
         {
-            if (File.Exists("test"))
-                File.Delete("test");
+
         }
 
         public class FakeTapeStreamSerializer : ITapeStreamSerializer
@@ -85,7 +100,7 @@ namespace FileTapeStreamTests
         [TestMethod]
         public void AppendAndReadRecordsTest()
         {
-            var target = new FileTapeStream.FileTapeStream("test", new FakeTapeStreamSerializer());
+            var target = new AzureTapeStream.AzureTapeStream("test", DevConnectionString, TestContainerName, new FakeTapeStreamSerializer());
 
             const string expected = "Some test data";
 

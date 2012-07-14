@@ -1,5 +1,4 @@
-﻿using FileTapeStream;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -9,17 +8,13 @@ using TapeStream;
 
 namespace FileTapeStreamTests
 {
-    
-    
     /// <summary>
     ///This is a test class for TapeStreamSerializerTest and is intended
     ///to contain all TapeStreamSerializerTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestClass]
     public class TapeStreamSerializerTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -72,7 +67,7 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for ReadAndVerifySignature
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         [DeploymentItem("TapeStream.dll")]
         public void ReadAndVerifySignatureTest()
         {
@@ -85,7 +80,7 @@ namespace FileTapeStreamTests
 
                 ms.Seek(0, SeekOrigin.Begin);
 
-                TapeStreamSerializer_Accessor.ReadAndVerifySignature(ms, Encoding.ASCII.GetBytes("SIGNATURE"), "SIGNATURE");
+                TapeStreamSerializer_Accessor.ReadAndVerifySignature(ms, expected, "SIGNATURE");
 
                 // No assert - ReadAndVerifySignature should throw if it fails, 
                 // otherwise test passes.
@@ -95,7 +90,7 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for ReadAndVerifySignature
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         [DeploymentItem("TapeStream.dll")]
         [ExpectedException(typeof(SignatureVerificationException))]
         public void ReadAndVerifySignatureFailsOnBadTest_TooShort()
@@ -109,7 +104,7 @@ namespace FileTapeStreamTests
 
                 ms.Seek(0, SeekOrigin.Begin);
 
-                TapeStreamSerializer_Accessor.ReadAndVerifySignature(ms, Encoding.ASCII.GetBytes("SIGNATURE"), "SIGNATURE");
+                TapeStreamSerializer_Accessor.ReadAndVerifySignature(ms, expected, "SIGNATURE");
 
             }
         }
@@ -117,7 +112,7 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for ReadAndVerifySignature
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         [DeploymentItem("TapeStream.dll")]
         [ExpectedException(typeof(SignatureVerificationException))]
         public void ReadAndVerifySignatureFailsOnBadTest_BadCharacter()
@@ -131,19 +126,18 @@ namespace FileTapeStreamTests
 
                 ms.Seek(0, SeekOrigin.Begin);
 
-                TapeStreamSerializer_Accessor.ReadAndVerifySignature(ms, Encoding.ASCII.GetBytes("SIGNATURE"), "SIGNATURE");
-
+                TapeStreamSerializer_Accessor.ReadAndVerifySignature(ms, expected, "SIGNATURE");
             }
         }
 
         /// <summary>
         ///A test for ReadReadableHash
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         [DeploymentItem("TapeStream.dll")]
         public void ReadReadableHashTest()
         {
-            byte expected = 109;
+            const byte expected = 109;
 
             using (MemoryStream ms = new MemoryStream())
             using (BinaryWriter bw = new BinaryWriter(ms))
@@ -164,16 +158,16 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for ReadReadableInt64
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         [DeploymentItem("TapeStream.dll")]
         public void ReadReadableInt64Test()
         {
-            var expected = 74L;
+            const long expected = 74L;
 
             using (MemoryStream ms = new MemoryStream())
             using (BinaryWriter bw = new BinaryWriter(ms))
             {
-                var buffer = Encoding.UTF8.GetBytes(74L.ToString("x16"));
+                var buffer = Encoding.UTF8.GetBytes(expected.ToString("x16"));
                 bw.Write(buffer);
                 ms.Seek(0, SeekOrigin.Begin);
 
@@ -186,32 +180,33 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for ReadRecord
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         public void ReadRecordTest()
         {
-            var expected = new TapeRecord(3L, Encoding.UTF8.GetBytes("TEST"));
+            byte[] expecteddata = Encoding.UTF8.GetBytes("TEST");
+            const long versionToWrite = 3L;
+            var expectedrecord = new TapeRecord(versionToWrite, expecteddata);
 
             using (MemoryStream ms = new MemoryStream())
-            using (StreamWriter sw = new StreamWriter(ms))
             {
-                new TapeStreamSerializer().WriteRecord(ms, Encoding.UTF8.GetBytes("TEST"), 3L);
+                new TapeStreamSerializer().WriteRecord(ms, expecteddata, versionToWrite);
                 ms.Seek(0, SeekOrigin.Begin);
 
                 var actual = new TapeStreamSerializer().ReadRecord(ms);
 
-                Assert.AreEqual(expected.Version, actual.Version);
-                Assert.AreEqual(expected.Data[0], actual.Data[0]);
+                Assert.AreEqual(expectedrecord.Version, actual.Version);
+                Assert.AreEqual(expectedrecord.Data[0], actual.Data[0]);
             }
         }
 
         /// <summary>
         ///A test for WriteReadableHash
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         [DeploymentItem("TapeStream.dll")]
         public void WriteReadableHashTest()
         {
-            byte expected = 109;
+            const byte expected = 109;
 
             using (MemoryStream ms = new MemoryStream())
             using (BinaryWriter bw = new BinaryWriter(ms))
@@ -232,16 +227,16 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for WriteReadableInt64
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         [DeploymentItem("TapeStream.dll")]
         public void WriteReadableInt64Test()
         {
-            var expected = 74L;
+            const long expected = 74L;
 
             using (MemoryStream ms = new MemoryStream())
             using (BinaryWriter bw = new BinaryWriter(ms))
             {
-                TapeStreamSerializer_Accessor.WriteReadableInt64(bw, 74L);
+                TapeStreamSerializer_Accessor.WriteReadableInt64(bw, expected);
                 ms.Seek(0, SeekOrigin.Begin);
 
                 var actual = TapeStreamSerializer_Accessor.ReadReadableInt64(ms);
@@ -253,131 +248,23 @@ namespace FileTapeStreamTests
         /// <summary>
         ///A test for WriteRecord
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         public void WriteRecordTest()
         {
-            var expected = new TapeRecord(3L, Encoding.UTF8.GetBytes("TEST"));
+            byte[] expecteddata = Encoding.UTF8.GetBytes("TEST");
+            const long expectedversion = 3L;
+            var expectedrecord = new TapeRecord(expectedversion, expecteddata);
 
             using (MemoryStream ms = new MemoryStream())
-            using (StreamWriter sw = new StreamWriter(ms))
             {
-                new TapeStreamSerializer().WriteRecord(ms, Encoding.UTF8.GetBytes("TEST"), 3L);
+                new TapeStreamSerializer().WriteRecord(ms, expecteddata, expectedversion);
                 ms.Seek(0, SeekOrigin.Begin);
 
                 var actual = new TapeStreamSerializer().ReadRecord(ms);
 
-                Assert.AreEqual(expected.Version, actual.Version);
-                Assert.AreEqual(expected.Data[0], actual.Data[0]);
+                Assert.AreEqual(expectedrecord.Version, actual.Version);
+                Assert.AreEqual(expectedrecord.Data[0], actual.Data[0]);
             }
-        }
-
-        /// <summary>
-        ///A test for TapeStreamSerializer Constructor
-        ///</summary>
-        [TestMethod()]
-        public void TapeStreamSerializerConstructorTest()
-        {
-            TapeStreamSerializer target = new TapeStreamSerializer();
-            Assert.Inconclusive("TODO: Implement code to verify target");
-        }
-
-        /// <summary>
-        ///A test for ReadAndVerifySignature
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("TapeStream.dll")]
-        public void ReadAndVerifySignatureTest1()
-        {
-            Stream source = null; // TODO: Initialize to an appropriate value
-            IList<byte> signature = null; // TODO: Initialize to an appropriate value
-            string name = string.Empty; // TODO: Initialize to an appropriate value
-            TapeStreamSerializer_Accessor.ReadAndVerifySignature(source, signature, name);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for ReadReadableHash
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("TapeStream.dll")]
-        public void ReadReadableHashTest1()
-        {
-            Stream stream = null; // TODO: Initialize to an appropriate value
-            IEnumerable<byte> expected = null; // TODO: Initialize to an appropriate value
-            IEnumerable<byte> actual;
-            actual = TapeStreamSerializer_Accessor.ReadReadableHash(stream);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for ReadReadableInt64
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("TapeStream.dll")]
-        public void ReadReadableInt64Test1()
-        {
-            Stream stream = null; // TODO: Initialize to an appropriate value
-            long expected = 0; // TODO: Initialize to an appropriate value
-            long actual;
-            actual = TapeStreamSerializer_Accessor.ReadReadableInt64(stream);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for ReadRecord
-        ///</summary>
-        [TestMethod()]
-        public void ReadRecordTest1()
-        {
-            TapeStreamSerializer target = new TapeStreamSerializer(); // TODO: Initialize to an appropriate value
-            Stream file = null; // TODO: Initialize to an appropriate value
-            TapeRecord expected = null; // TODO: Initialize to an appropriate value
-            TapeRecord actual;
-            actual = target.ReadRecord(file);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for WriteReadableHash
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("TapeStream.dll")]
-        public void WriteReadableHashTest1()
-        {
-            BinaryWriter writer = null; // TODO: Initialize to an appropriate value
-            byte[] hash = null; // TODO: Initialize to an appropriate value
-            TapeStreamSerializer_Accessor.WriteReadableHash(writer, hash);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for WriteReadableInt64
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("TapeStream.dll")]
-        public void WriteReadableInt64Test1()
-        {
-            BinaryWriter writer = null; // TODO: Initialize to an appropriate value
-            long value = 0; // TODO: Initialize to an appropriate value
-            TapeStreamSerializer_Accessor.WriteReadableInt64(writer, value);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for WriteRecord
-        ///</summary>
-        [TestMethod()]
-        public void WriteRecordTest1()
-        {
-            TapeStreamSerializer target = new TapeStreamSerializer(); // TODO: Initialize to an appropriate value
-            Stream stream = null; // TODO: Initialize to an appropriate value
-            byte[] data = null; // TODO: Initialize to an appropriate value
-            long versionToWrite = 0; // TODO: Initialize to an appropriate value
-            target.WriteRecord(stream, data, versionToWrite);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }
 }
