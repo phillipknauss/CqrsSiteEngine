@@ -114,5 +114,27 @@ namespace AzureTapeStreamTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        ///A test for repeated Append and ReadRecords
+        ///</summary>
+        [TestMethod]
+        public void RepeatedAppendAndReadRecordsTest()
+        {
+            var target = new AzureTapeStream.AzureTapeStream(DateTime.Now.ToString("yyyyMMsshhmmss"), DevConnectionString, TestContainerName, new FakeTapeStreamSerializer());
+
+            const string expected = "Some test dataSome more test data";
+            
+            target.Append(Encoding.ASCII.GetBytes("Some test data"));
+
+            target.Append(Encoding.ASCII.GetBytes("Some more test data"));
+
+            IEnumerable<TapeRecord> records = target.ReadRecords();
+
+            var items = new List<TapeRecord>(records);
+
+            var actual = Encoding.ASCII.GetString(items[0].Data);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

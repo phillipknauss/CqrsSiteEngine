@@ -19,6 +19,7 @@ Library Dependencies
 
 1. ProtoBuf-net 2.0.0.480
 2. Ncqrs github pull from 7/5/2012
+3. ASP.NET MVC 4 RC (For UserInterface project, if you intend do not wish to use that project, this is optional)
 
 Optional Dependencies:
 

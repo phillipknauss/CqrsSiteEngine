@@ -45,6 +45,7 @@ namespace AzureReadModelTests
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(DevConnectionString);
             blobClient = storageAccount.CreateCloudBlobClient();
             container = blobClient.GetContainerReference(TestContainerName);
+            
             container.CreateIfNotExist();
         }
 
