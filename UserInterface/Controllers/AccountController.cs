@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using UserInterface.Models;
+using Commands;
 
 namespace UserInterface.Controllers
 {
@@ -17,6 +18,28 @@ namespace UserInterface.Controllers
             return ContextDependentView();
         }
 
+        bool UserValidated(LogOnModel model)
+        {
+            var service = new Commanding.SimpleTwitterCommandServiceClient();
+            var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
+            var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
+            if (user == null)
+            {
+                ModelState.AddModelError("", "The username or password provided is incorrect.");
+            }
+
+            service.ValidateUser(new ValidateUserCommand()
+            {
+                UserID = user.Id,
+                Username = model.UserName,
+                Password = model.Password
+            });
+
+            bool validated = readModel.UserValidated(user.Id);
+
+            return validated;
+        }
+
         // POST: /Account/JsonLogOn
         [AllowAnonymous]
         [HttpPost]
@@ -24,8 +47,12 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                if (UserValidated(model))
                 {
+                    var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
+                    var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
+
+                    Session.Add("UserID", user.Id);
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return Json(new { success = true, redirect = returnUrl });
                 }
@@ -43,8 +70,12 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                if (UserValidated(model))
                 {
+                    var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
+                    var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
+
+                    Session.Add("UserID", user.Id);
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 
                     return Url.IsLocalUrl(returnUrl)
@@ -62,6 +93,12 @@ namespace UserInterface.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
+            
+            var service = new Commanding.SimpleTwitterCommandServiceClient();
+            service.InvalidateUser(new InvalidateUserCommand()
+            {
+                UserID = (Guid)Session["UserID"]
+            });
 
             return RedirectToAction("Index", "Home");
         }
@@ -73,6 +110,40 @@ namespace UserInterface.Controllers
             return ContextDependentView();
         }
 
+        bool DoRegister(RegisterModel model)
+        {
+            var service = new Commanding.SimpleTwitterCommandServiceClient();
+            var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
+            service.CreateUser(new CreateUserCommand()
+            {
+                Username = model.UserName
+            });
+
+            var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Command failed.");
+                return false;
+            }
+
+            service.SetUserPassword(new SetUserPasswordCommand()
+            {
+                UserID = user.Id,
+                Password = model.Password
+            });
+
+            service.SetUserProperty(new SetUserPropertyCommand()
+            {
+                UserID = user.Id,
+                Name = "Email",
+                Value = model.Email
+            });
+
+            FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
+            return true;
+        }
+
         // POST: /Account/JsonRegister
         [AllowAnonymous]
         [HttpPost]
@@ -80,18 +151,15 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                if (DoRegister(model))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
+                    var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
+                    var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
+                    Session.Add("UserID", user.Id);
                     return Json(new { success = true });
                 }
-                ModelState.AddModelError("", ErrorCodeToString(createStatus));
             }
-
+            
             // If we got this far, something failed
             return Json(new { errors = GetErrorsFromModelState() });
         }
@@ -103,18 +171,16 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                if (DoRegister(model))
                 {
+                    var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
+                    var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
+                    Session.Add("UserID", user.Id);
                     FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", ErrorCodeToString(createStatus));
             }
-
+            
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -132,24 +198,8 @@ namespace UserInterface.Controllers
             if (ModelState.IsValid)
             {
 
-                // ChangePassword will throw an exception rather
-                // than return false in certain failure scenarios.
-                bool changePasswordSucceeded;
-                try
-                {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, userIsOnline: true);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
-                }
-                catch (Exception)
-                {
-                    changePasswordSucceeded = false;
-                }
-
-                if (changePasswordSucceeded)
-                {
-                    return RedirectToAction("ChangePasswordSuccess");
-                }
-                ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                throw new NotImplementedException();
+                
             }
 
             // If we got this far, something failed, redisplay form

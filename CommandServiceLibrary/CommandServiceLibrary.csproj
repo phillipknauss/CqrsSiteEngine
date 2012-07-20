@@ -77,6 +77,10 @@
       <Project>{692DC4C1-CD32-4D4D-A999-45713053C33C}</Project>
       <Name>Commands</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Config\Config.csproj">
+      <Project>{E7A4F793-D5ED-4746-AE59-B8976FF65304}</Project>
+      <Name>Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eventing\Eventing.csproj">
       <Project>{7C64B56D-45E6-43EE-B9DE-40676021AC59}</Project>
       <Name>Eventing</Name>

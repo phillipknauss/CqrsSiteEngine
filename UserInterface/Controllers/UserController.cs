@@ -105,18 +105,50 @@ namespace UserInterface.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult SetPassword()
+        public ActionResult SetPassword(Guid id)
         {
-            return View();
+            var model = new Models.ChangePasswordModel();
+            // todo: Verify that user has setpassword permission
+            model.UserID = id;
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult SetPassword(Commands.SetUserPasswordCommand command)
+        public ActionResult SetPassword(Models.ChangePasswordModel command)
         {
             var service = new Commanding.SimpleTwitterCommandServiceClient();
-            service.SetUserPassword(command);
+            service.SetUserPassword(new Commands.SetUserPasswordCommand()
+                {
+                    UserID = command.UserID,
+                    Password = command.NewPassword
+                });
 
             return RedirectToAction("Details", new { id = command.UserID });
+        }
+
+        [HttpPost]
+        public ActionResult Validate(string username, string submittedPassword)
+        {
+            var service = new Commanding.SimpleTwitterCommandServiceClient();
+            var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
+            
+            var user = readModel.GetUsers().Where(n => n.Username == username).SingleOrDefault();
+
+            if (user == null)
+            {
+                return View(false);
+            }
+
+            service.ValidateUser(new Commands.ValidateUserCommand()
+            {
+                UserID = user.Id,
+                Username = username,
+                Password = submittedPassword 
+            });
+
+            bool result = readModel.UserValidated(user.Id);
+
+            return View(result);
         }
     }
 

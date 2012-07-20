@@ -95,6 +95,52 @@ namespace ReadModel.Denormalizers
         }
     }
 
+    public class UserIndexValidatedDenormalizer : IEventHandler<UserValidatedEvent>
+    {
+        public void Handle(IPublishedEvent<UserValidatedEvent> evnt)
+        {
+            var store = Ncqrs.NcqrsEnvironment.Get<IReadModelStore>();
+
+            var model = store.GetReadModel<UserIndexReadModel>();
+
+            var items = model.Get("items") as List<UserIndexItem>;
+
+            var item = items.SingleOrDefault(n => n.Id == evnt.Payload.UserID);
+
+            if (item == null)
+            {
+                return;
+            }
+
+            item.Authenticated = true;
+
+            store.Save(model);
+        }
+    }
+
+    public class UserIndexInvalidatedDenormalizer : IEventHandler<UserInvalidatedEvent>
+    {
+        public void Handle(IPublishedEvent<UserInvalidatedEvent> evnt)
+        {
+            var store = Ncqrs.NcqrsEnvironment.Get<IReadModelStore>();
+
+            var model = store.GetReadModel<UserIndexReadModel>();
+
+            var items = model.Get("items") as List<UserIndexItem>;
+
+            var item = items.SingleOrDefault(n => n.Id == evnt.Payload.UserID);
+
+            if (item == null)
+            {
+                return;
+            }
+
+            item.Authenticated = false;
+
+            store.Save(model);
+        }
+    }
+
     public class UserIndexPropertySetDenormalizer : IEventHandler<UserPropertySetEvent>
     {
         public void Handle(IPublishedEvent<UserPropertySetEvent> evnt)

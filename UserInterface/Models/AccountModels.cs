@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using System;
 
 namespace UserInterface.Models
 {
 
     public class ChangePasswordModel
     {
-        [Required]
+        public Guid UserID { get; set; }
+
+        //[Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }
@@ -17,7 +20,7 @@ namespace UserInterface.Models
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
-        [DataType(DataType.Password)]
+        //[DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }

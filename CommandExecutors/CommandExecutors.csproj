@@ -43,13 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SetUserPasswordCommandExecutor.cs" />
-    <Compile Include="SetUserPropertyCommandExecutor.cs" />
-    <Compile Include="DeleteUserCommandExecutor.cs" />
-    <Compile Include="CreateUserCommandExecutor.cs" />
-    <Compile Include="CreateChannelCommandExecutor.cs" />
-    <Compile Include="DeleteTweetCommandExecutor.cs" />
-    <Compile Include="PostNewTweetCommandExecutor.cs" />
+    <Compile Include="User\InvalidateUserCommandExecutor.cs" />
+    <Compile Include="User\ValidateUserCommandExecutor.cs" />
+    <Compile Include="User\SetUserPasswordCommandExecutor.cs" />
+    <Compile Include="User\SetUserPropertyCommandExecutor.cs" />
+    <Compile Include="User\DeleteUserCommandExecutor.cs" />
+    <Compile Include="User\CreateUserCommandExecutor.cs" />
+    <Compile Include="Channel\CreateChannelCommandExecutor.cs" />
+    <Compile Include="Tweet\DeleteTweetCommandExecutor.cs" />
+    <Compile Include="Tweet\PostNewTweetCommandExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

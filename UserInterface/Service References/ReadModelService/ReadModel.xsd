@@ -40,6 +40,7 @@
   <xs:element name="ArrayOfUserIndexItem" nillable="true" type="tns:ArrayOfUserIndexItem" />
   <xs:complexType name="UserIndexItem">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Authenticated" type="xs:boolean" />
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="ser:guid" />

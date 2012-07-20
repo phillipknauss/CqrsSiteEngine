@@ -58,6 +58,18 @@ namespace CommandServiceLibrary
             service.Execute(command);
         }
 
+        public void ValidateUser(ValidateUserCommand command)
+        {
+            var service = NcqrsEnvironment.Get<ICommandService>();
+            service.Execute(command);
+        }
+
+        public void InvalidateUser(InvalidateUserCommand command)
+        {
+            var service = NcqrsEnvironment.Get<ICommandService>();
+            service.Execute(command);
+        }
+
         #endregion
 
         static SimpleTwitterCommandService()

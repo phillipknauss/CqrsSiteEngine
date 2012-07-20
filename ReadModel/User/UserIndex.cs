@@ -17,6 +17,9 @@ namespace ReadModel
         [ProtoMember(5)]
         public IDictionary<string,UserProperty> Properties { get; set; }
 
+        [ProtoMember(6)]
+        public bool Authenticated { get; set; }
+
         #region Property Pivot
         
         // Due to limitations in Asp.NET MVC's strongly typed views, each property needs to be strongly typed, which isn't really possible with a dictionary,

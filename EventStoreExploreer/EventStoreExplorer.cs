@@ -15,7 +15,9 @@ namespace EventStoreExploreer
         {
             InitializeComponent();
 
-            fileStore = ConfigurationManager.AppSettings["EventStorePath"];
+            Config.Config.LoadFromXml(Config.Config.DefaultPath);
+
+            fileStore = Config.Config.Get("EventStoreExploreer.FileEventStorePath");
             store = new Eventing.FileSystemEventStore(fileStore);
         }
 
@@ -27,7 +29,7 @@ namespace EventStoreExploreer
             {
                 fileStore = OpenEventStoreDialog.SelectedPath;
                 store = new Eventing.FileSystemEventStore(fileStore);
-                ConfigurationManager.AppSettings["EventStorePath"] = fileStore;
+                //ConfigurationManager.AppSettings["EventStorePath"] = fileStore;
             }
         }
 
@@ -129,7 +131,7 @@ namespace EventStoreExploreer
 
         private void EventStoreExplorer_Load(object sender, EventArgs e)
         {
-            fileStore = ConfigurationManager.AppSettings["EventStorePath"];
+            fileStore = Config.Config.Get("EventStoreExploreer.FileEventStorePath");
             store = new Eventing.FileSystemEventStore(fileStore);
             PopulateGrid();
         }

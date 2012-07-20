@@ -32,6 +32,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { userId=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Set Password", "SetPassword", new { id=item.Id, userId=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { userId=item.Id })
         </td>
     </tr>

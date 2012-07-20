@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ReadModel;
+using System;
 
 namespace ReadModelServiceLibrary
 {
@@ -37,6 +38,24 @@ namespace ReadModelServiceLibrary
             var sorted = (query as IEnumerable<UserIndexItem>).OrderBy(n => n.Username);
 
             return sorted;
+        }
+
+        public bool UserValidated(Guid UserID)
+        {
+            var store = Ncqrs.NcqrsEnvironment.Get<ReadModel.IReadModelStore>();
+            var readModel = store.GetOrCreate<ReadModel.UserIndexReadModel>();
+            var query = readModel.Get("items");
+
+            var enumerable = query as IEnumerable<UserIndexItem>;
+            var user = enumerable.Where(n => n.Id == UserID).SingleOrDefault();
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            return user.Authenticated;
+            
         }
 
         static SimpleTwitterReadModelService()

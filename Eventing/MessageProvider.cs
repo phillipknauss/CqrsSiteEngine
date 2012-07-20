@@ -26,6 +26,8 @@ namespace Eventing
                             typeof (Events.UserDeletedEvent),
                             typeof (Events.UserPropertySetEvent),
                             typeof (Events.UserPasswordSetEvent),
+                            typeof(Events.UserValidatedEvent),
+                            typeof(Events.UserInvalidatedEvent),
                             typeof (MessageContract)
                         }.ToArray();
 

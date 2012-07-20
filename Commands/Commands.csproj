@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="User\InvalidateUserCommand.cs" />
+    <Compile Include="User\ValidateUserCommand.cs" />
     <Compile Include="User\SetUserPasswordCommand.cs" />
     <Compile Include="User\SetUserPropertyCommand.cs" />
     <Compile Include="User\DeleteUserCommand.cs" />

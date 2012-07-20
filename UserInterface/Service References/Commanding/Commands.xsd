@@ -14,20 +14,9 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="PostNewTweetCommand" nillable="true" type="tns:PostNewTweetCommand" />
-  <xs:complexType name="DeleteUserCommand">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q2:CommandBase">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UserID" type="ser:guid" />
-          <xs:element minOccurs="0" name="Who" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="DeleteUserCommand" nillable="true" type="tns:DeleteUserCommand" />
   <xs:complexType name="SetUserPropertyCommand">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q3:CommandBase">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q2:CommandBase">
         <xs:sequence>
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="UserID" type="ser:guid" />
@@ -39,7 +28,7 @@
   <xs:element name="SetUserPropertyCommand" nillable="true" type="tns:SetUserPropertyCommand" />
   <xs:complexType name="SetUserPasswordCommand">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q4:CommandBase">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q3:CommandBase">
         <xs:sequence>
           <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="UserID" type="ser:guid" />
@@ -48,6 +37,16 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="SetUserPasswordCommand" nillable="true" type="tns:SetUserPasswordCommand" />
+  <xs:complexType name="CreateUserCommand">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q4:CommandBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateUserCommand" nillable="true" type="tns:CreateUserCommand" />
   <xs:complexType name="DeleteTweetCommand">
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q5:CommandBase">
@@ -59,9 +58,20 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="DeleteTweetCommand" nillable="true" type="tns:DeleteTweetCommand" />
-  <xs:complexType name="CreateNewChannelCommand">
+  <xs:complexType name="DeleteUserCommand">
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q6:CommandBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UserID" type="ser:guid" />
+          <xs:element minOccurs="0" name="Who" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteUserCommand" nillable="true" type="tns:DeleteUserCommand" />
+  <xs:complexType name="CreateNewChannelCommand">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q7:CommandBase">
         <xs:sequence>
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         </xs:sequence>
@@ -69,14 +79,26 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="CreateNewChannelCommand" nillable="true" type="tns:CreateNewChannelCommand" />
-  <xs:complexType name="CreateUserCommand">
+  <xs:complexType name="ValidateUserCommand">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q7:CommandBase">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q8:CommandBase">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserID" type="ser:guid" />
           <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="CreateUserCommand" nillable="true" type="tns:CreateUserCommand" />
+  <xs:element name="ValidateUserCommand" nillable="true" type="tns:ValidateUserCommand" />
+  <xs:complexType name="InvalidateUserCommand">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/Ncqrs.Commanding" base="q9:CommandBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UserID" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InvalidateUserCommand" nillable="true" type="tns:InvalidateUserCommand" />
 </xs:schema>

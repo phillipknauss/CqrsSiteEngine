@@ -76,6 +76,10 @@
       <Project>{911633DD-30B8-4B0B-9B1F-BF864004F3CF}</Project>
       <Name>AzureTapeStream</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Config\Config.csproj">
+      <Project>{E7A4F793-D5ED-4746-AE59-B8976FF65304}</Project>
+      <Name>Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Events\Events.csproj">
       <Project>{DE2CBE6B-81F4-4CA5-9242-0185FDD19B97}</Project>
       <Name>Events</Name>

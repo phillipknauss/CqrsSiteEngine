@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Events;
 using Ncqrs.Domain;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Domain
 {
@@ -56,13 +58,45 @@ namespace Domain
             var e = new UserPasswordSetEvent(Guid.NewGuid(), Guid.Empty, Version + 1, DateTime.UtcNow)
             {
                 UserID = userID,
-                Password = password,
+                Password = User.EncodePassword(password),
                 TimeStamp = DateTime.UtcNow
             };
 
             ApplyEvent(e);
         }
 
+        public bool Validate(Guid userID, string name, string password)
+        {
+            var encoded = User.EncodePassword(password);
+            if (encoded == _password)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void Validated(Guid userID)
+        {
+            var e = new UserValidatedEvent(Guid.NewGuid(), Guid.Empty, Version + 1, DateTime.UtcNow)
+            {
+                UserID = userID,
+                TimeStamp = DateTime.UtcNow
+            };
+
+            ApplyEvent(e);
+        }
+
+        public void Invalidate(Guid userID)
+        {
+            var e = new UserInvalidatedEvent(Guid.NewGuid(), Guid.Empty, Version + 1, DateTime.UtcNow)
+            {
+                UserID = userID,
+                TimeStamp = DateTime.UtcNow
+            };
+
+            ApplyEvent(e);
+        }
+        
         protected void OnUserCreated(UserCreatedEvent e)
         {
             _name = e.Name;
@@ -105,6 +139,31 @@ namespace Domain
             _password = e.Password;
         }
 
+        protected void OnUserValidated(UserValidatedEvent e)
+        {
+            _userState = UserState.Authenticated;
+        }
+
+        protected void OnUserInvalidated(UserInvalidatedEvent e)
+        {
+            _userState = UserState.Normal;
+        }
+
+        static string EncodePassword(string originalPassword)
+        {
+            //Declarations
+            Byte[] originalBytes;
+            Byte[] encodedBytes;
+            MD5 md5;
+
+            //Instantiate MD5CryptoServiceProvider, get bytes for original password and compute hash (encoded password)
+            md5 = new MD5CryptoServiceProvider();
+            originalBytes = Encoding.Default.GetBytes(originalPassword);
+            encodedBytes = md5.ComputeHash(originalBytes);
+
+            //Convert encoded bytes back to a 'readable' string
+            return BitConverter.ToString(encodedBytes);
+        }
     }
 
     public enum UserState

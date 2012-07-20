@@ -248,6 +248,7 @@
     <None Include="Service References\ReadModelService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\User\SetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

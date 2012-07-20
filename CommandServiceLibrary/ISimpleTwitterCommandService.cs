@@ -38,6 +38,12 @@ namespace CommandServiceLibrary
         [OperationContract]
         void SetUserPassword(SetUserPasswordCommand command);
 
+        [OperationContract]
+        void ValidateUser(ValidateUserCommand command);
+
+        [OperationContract]
+        void InvalidateUser(InvalidateUserCommand command);
+
         #endregion
     }
 }

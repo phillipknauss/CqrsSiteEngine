@@ -19,9 +19,9 @@ namespace Eventing
         public AzureSystemEventStore()
         {
             Streamer = new EventStreamer(new EventSerializer(MessagesProvider.GetKnownEventTypes()));
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Settings.Default.AzureConnectionString);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Config.Config.Get("Eventing.AzureConnectionString"));
             blobClient = storageAccount.CreateCloudBlobClient();
-            container = blobClient.GetContainerReference(Settings.Default.AzureContainerName);
+            container = blobClient.GetContainerReference(Config.Config.Get("Eventing.AzureContainerName"));
             container.CreateIfNotExist();
         }
 
@@ -41,7 +41,7 @@ namespace Eventing
 
         public void Store(UncommittedEventStream eventStream)
         {
-            var tapeStream = new AzureTapeStream.AzureTapeStream(eventStream.SourceId.ToString(), Settings.Default.AzureConnectionString, Settings.Default.AzureContainerName);
+            var tapeStream = new AzureTapeStream.AzureTapeStream(eventStream.SourceId.ToString(), Config.Config.Get("Eventing.AzureConnectionString"), Config.Config.Get("Eventing.AzureContainerName"));
 
             foreach (var record in eventStream.Select(evt => Streamer.SerializeEvent(evt.Payload as ISourcedEvent)))
             {
@@ -68,8 +68,8 @@ namespace Eventing
 
         public IEnumerable<ISourcedEvent> GetAllEvents(Guid id)
         {
-            var tapeStream = new AzureTapeStream.AzureTapeStream(id.ToString(), Settings.Default.AzureConnectionString,
-                                                                 Settings.Default.AzureContainerName);
+            var tapeStream = new AzureTapeStream.AzureTapeStream(id.ToString(),Config.Config.Get("Eventing.AzureConnectionString"),
+                                                                 Config.Config.Get("Eventing.AzureContainerName"));
             var records = tapeStream.ReadRecords();
 
             List<ISourcedEvent> events = records.Select(rec => Streamer.DeserializeEvent(rec.Data)).ToList();

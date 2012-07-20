@@ -12,6 +12,9 @@ namespace CommandServiceLibrary
     {
         public static void BootUp()
         {
+            // initialize the config system
+            Config.Config.LoadFromXml(Config.Config.DefaultPath);
+            
             Ncqrs.NcqrsEnvironment.SetDefault<ICommandService>(InitializeCommandService());
             Ncqrs.NcqrsEnvironment.SetDefault<IEventStore>(InitializeEventStore());
             Ncqrs.NcqrsEnvironment.SetDefault<ReadModel.IReadModelStore>(InitializeReadModelStore());
@@ -28,6 +31,8 @@ namespace CommandServiceLibrary
             service.RegisterExecutor(new DeleteUserCommandExecutor());
             service.RegisterExecutor(new SetUserPropertyCommandExecutor());
             service.RegisterExecutor(new SetUserPasswordCommandExecutor());
+            service.RegisterExecutor(new ValidateUserCommandExecutor());
+            service.RegisterExecutor(new InvalidateUserCommandExecutor());
 
             return service;
         }
@@ -40,7 +45,7 @@ namespace CommandServiceLibrary
 
         private static ReadModel.IReadModelStore InitializeReadModelStore()
         {
-            return new AzureReadModelStore(Settings.Default.AzureConnectionString, Settings.Default.AzureContainerName);
+            return new AzureReadModelStore( Config.Config.Get("Eventing.AzureConnectionString"),  Config.Config.Get("Eventing.AzureContainerName"));
         }
 
         private static IEventBus InitializeEventBus()
@@ -54,6 +59,8 @@ namespace CommandServiceLibrary
             bus.RegisterHandler(new UserIndexDeleteDenormalizer());
             bus.RegisterHandler(new UserIndexPropertySetDenormalizer());
             bus.RegisterHandler(new UserIndexPasswordSetDenormalizer());
+            bus.RegisterHandler(new UserIndexValidatedDenormalizer());
+            bus.RegisterHandler(new UserIndexInvalidatedDenormalizer());
 
             return bus;
         }

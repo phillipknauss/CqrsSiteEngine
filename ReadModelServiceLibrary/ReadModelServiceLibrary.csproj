@@ -69,6 +69,10 @@
       <Project>{9C6EDE99-C5D0-4190-A534-7CD9C7D71B0E}</Project>
       <Name>AzureReadModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Config\Config.csproj">
+      <Project>{E7A4F793-D5ED-4746-AE59-B8976FF65304}</Project>
+      <Name>Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FileReadModel\FileReadModel.csproj">
       <Project>{04EBD693-E437-4459-9337-3BCDAA0C9921}</Project>
       <Name>FileReadModel</Name>

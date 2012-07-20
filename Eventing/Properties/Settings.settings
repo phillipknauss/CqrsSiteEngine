@@ -2,11 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Eventing.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="AzureContainerName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">containername</Value>
-    </Setting>
-    <Setting Name="AzureConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">UseDevelopmentStorage=true</Value>
-    </Setting>
+    
   </Settings>
 </SettingsFile>

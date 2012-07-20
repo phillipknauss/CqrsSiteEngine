@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
 using ReadModel;
+using System;
 
 namespace ReadModelServiceLibrary
 {
@@ -15,5 +16,8 @@ namespace ReadModelServiceLibrary
 
         [OperationContract]
         IEnumerable<UserIndexItem> GetUsers();
+
+        [OperationContract]
+        bool UserValidated(Guid UserID);
     }
 }
