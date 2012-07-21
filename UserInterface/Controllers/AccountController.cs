@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using UserInterface.Models;
 using Commands;
+using System.Web;
 
 namespace UserInterface.Controllers
 {
@@ -18,28 +19,6 @@ namespace UserInterface.Controllers
             return ContextDependentView();
         }
 
-        bool UserValidated(LogOnModel model)
-        {
-            var service = new Commanding.SimpleTwitterCommandServiceClient();
-            var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
-            var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
-            if (user == null)
-            {
-                ModelState.AddModelError("", "The username or password provided is incorrect.");
-            }
-
-            service.ValidateUser(new ValidateUserCommand()
-            {
-                UserID = user.Id,
-                Username = model.UserName,
-                Password = model.Password
-            });
-
-            bool validated = readModel.UserValidated(user.Id);
-
-            return validated;
-        }
-
         // POST: /Account/JsonLogOn
         [AllowAnonymous]
         [HttpPost]
@@ -47,13 +26,13 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UserValidated(model))
+                if (Authentication.UserValidated(model))
                 {
                     var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
                     var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
 
-                    Session.Add("UserID", user.Id);
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    Authentication.SetLogin(model, user);
+                    
                     return Json(new { success = true, redirect = returnUrl });
                 }
                 ModelState.AddModelError("", "The user name or password provided is incorrect.");
@@ -70,13 +49,12 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UserValidated(model))
+                if (Authentication.UserValidated(model))
                 {
                     var readModel = new ReadModelService.SimpleTwitterReadModelServiceClient();
                     var user = readModel.GetUsers().Where(n => n.Username == model.UserName).SingleOrDefault();
 
-                    Session.Add("UserID", user.Id);
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    Authentication.SetLogin(model, user);
 
                     return Url.IsLocalUrl(returnUrl)
                                ? (ActionResult) Redirect(returnUrl)
@@ -92,14 +70,7 @@ namespace UserInterface.Controllers
         // GET: /Account/LogOff
         public ActionResult LogOff()
         {
-            FormsAuthentication.SignOut();
-            
-            var service = new Commanding.SimpleTwitterCommandServiceClient();
-            service.InvalidateUser(new InvalidateUserCommand()
-            {
-                UserID = (Guid)Session["UserID"]
-            });
-
+            Authentication.SignOff();
             return RedirectToAction("Index", "Home");
         }
 

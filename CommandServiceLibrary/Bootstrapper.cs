@@ -33,6 +33,8 @@ namespace CommandServiceLibrary
             service.RegisterExecutor(new SetUserPasswordCommandExecutor());
             service.RegisterExecutor(new ValidateUserCommandExecutor());
             service.RegisterExecutor(new InvalidateUserCommandExecutor());
+            service.RegisterExecutor(new AddUserToRoleCommandExecutor());
+            service.RegisterExecutor(new RemoveUserFromRoleCommandExecutor());
 
             return service;
         }
@@ -61,6 +63,8 @@ namespace CommandServiceLibrary
             bus.RegisterHandler(new UserIndexPasswordSetDenormalizer());
             bus.RegisterHandler(new UserIndexValidatedDenormalizer());
             bus.RegisterHandler(new UserIndexInvalidatedDenormalizer());
+            bus.RegisterHandler(new UserIndexAddedToRoleDenormalizer());
+            bus.RegisterHandler(new UserIndexRemovedFromDenormalizer());
 
             return bus;
         }

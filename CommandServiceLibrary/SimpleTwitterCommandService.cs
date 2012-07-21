@@ -70,6 +70,18 @@ namespace CommandServiceLibrary
             service.Execute(command);
         }
 
+        public void AddUserToRole(AddUserToRoleCommand command)
+        {
+            var service = NcqrsEnvironment.Get<ICommandService>();
+            service.Execute(command);
+        }
+
+        public void RemoveUserFromRole(RemoveUserFromRoleCommand command)
+        {
+            var service = NcqrsEnvironment.Get<ICommandService>();
+            service.Execute(command);
+        }
+
         #endregion
 
         static SimpleTwitterCommandService()

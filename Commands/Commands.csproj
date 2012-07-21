@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="User\AddUserToRoleCommand.cs" />
+    <Compile Include="User\RemoveUserFromRoleCommand.cs" />
     <Compile Include="User\InvalidateUserCommand.cs" />
     <Compile Include="User\ValidateUserCommand.cs" />
     <Compile Include="User\SetUserPasswordCommand.cs" />

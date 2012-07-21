@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ProtoBuf;
+using System.Text;
 
 namespace ReadModel
 {
@@ -19,6 +21,28 @@ namespace ReadModel
 
         [ProtoMember(6)]
         public bool Authenticated { get; set; }
+
+        [ProtoMember(7)]
+        public List<string> Roles { get; set; }
+
+        public string SerializeRoles()
+        {
+            if (Roles == null || !Roles.Any())
+            {
+                return "";
+            }
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var role in Roles)
+            {
+                sb.Append(role);
+                if (role != Roles.Last())
+                {
+                    sb.Append(",");
+                }
+            }
+            return sb.ToString();
+        }
 
         #region Property Pivot
         
@@ -68,12 +92,24 @@ namespace ReadModel
         {
             get
             {
-                return GetBoolFromProperties("IsAdmin");
+                if (Roles == null)
+                {
+                    return false;
+                }
+                return Roles.Contains("Admin");
             }
 
             set
             {
-                SetValueOnProperties<bool>("IsAdmin", value, "checkbox", null);
+                if (Roles == null)
+                {
+                    Roles = new List<string>();
+                }
+                if (Roles.Contains("Admin"))
+                {
+                    return;
+                }
+                Roles.Add("Admin");
             }
         }
 
@@ -115,6 +151,7 @@ namespace ReadModel
         public UserIndexItem()
         {
             Properties = new Dictionary<string, UserProperty>();
+            Roles = new List<string>();
         }
 
     }

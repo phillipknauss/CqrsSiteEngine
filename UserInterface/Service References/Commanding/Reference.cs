@@ -41,6 +41,12 @@ namespace UserInterface.Commanding {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISimpleTwitterCommandService/InvalidateUser", ReplyAction="http://tempuri.org/ISimpleTwitterCommandService/InvalidateUserResponse")]
         void InvalidateUser(Commands.InvalidateUserCommand command);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISimpleTwitterCommandService/AddUserToRole", ReplyAction="http://tempuri.org/ISimpleTwitterCommandService/AddUserToRoleResponse")]
+        void AddUserToRole(Commands.AddUserToRoleCommand command);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISimpleTwitterCommandService/RemoveUserFromRole", ReplyAction="http://tempuri.org/ISimpleTwitterCommandService/RemoveUserFromRoleResponse")]
+        void RemoveUserFromRole(Commands.RemoveUserFromRoleCommand command);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -104,6 +110,14 @@ namespace UserInterface.Commanding {
         
         public void InvalidateUser(Commands.InvalidateUserCommand command) {
             base.Channel.InvalidateUser(command);
+        }
+        
+        public void AddUserToRole(Commands.AddUserToRoleCommand command) {
+            base.Channel.AddUserToRole(command);
+        }
+        
+        public void RemoveUserFromRole(Commands.RemoveUserFromRoleCommand command) {
+            base.Channel.RemoveUserFromRole(command);
         }
     }
 }

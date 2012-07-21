@@ -1,4 +1,4 @@
-﻿@model ReadModel.UserIndexItem
+﻿@model UserInterface.Models.UserModel
 
 @{
     ViewBag.Title = "Edit";
@@ -25,28 +25,28 @@
         </div>
 
         <div class="editor-label">
-            <Label for="FirstName">First Name</Label>
+            @Html.LabelFor(model => model.FirstName)
         </div>
         <div class="editor-field">
             @Html.EditorFor(Model => Model.FirstName)
         </div>
        
         <div class="editor-label">
-            <Label for="LastName">Last Name</Label>
+            @Html.LabelFor(model => model.LastName)
         </div>
         <div class="editor-field">
             @Html.EditorFor(Model => Model.LastName)
         </div>
 
          <div class="editor-label">
-            <Label for="Email">Email</Label>
+            @Html.LabelFor(model => model.Email)
         </div>
         <div class="editor-field">
             @Html.EditorFor(Model => Model.Email)
         </div>
 
          <div class="editor-label">
-            <Label for="IsAdmin">Admin</Label>
+            @Html.LabelFor(model => model.IsAdmin)
         </div>
         <div class="editor-field">
             @Html.CheckBoxFor(Model => Model.IsAdmin)

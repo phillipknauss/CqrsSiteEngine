@@ -14,6 +14,8 @@ namespace Domain
 
         private IDictionary<string,UserProperty> _properties;
 
+        private List<string> _roles;
+
         private UserState _userState;
 
         public User() { }
@@ -96,7 +98,31 @@ namespace Domain
 
             ApplyEvent(e);
         }
-        
+
+        public void AddToRole(Guid userID, string role)
+        {
+            var e = new UserAddedToRoleEvent(Guid.NewGuid(), Guid.Empty, Version + 1, DateTime.UtcNow)
+            {
+                UserID = userID,
+                Role = role,
+                TimeStamp = DateTime.UtcNow
+            };
+
+            ApplyEvent(e);
+        }
+
+        public void RemoveFromRole(Guid userID, string role)
+        {
+            var e = new UserRemovedFromRoleEvent(Guid.NewGuid(), Guid.Empty, Version + 1, DateTime.UtcNow)
+            {
+                UserID = userID,
+                Role = role,
+                TimeStamp = DateTime.UtcNow
+            };
+
+            ApplyEvent(e);
+        }
+
         protected void OnUserCreated(UserCreatedEvent e)
         {
             _name = e.Name;
@@ -147,6 +173,26 @@ namespace Domain
         protected void OnUserInvalidated(UserInvalidatedEvent e)
         {
             _userState = UserState.Normal;
+        }
+
+        protected void OnUserAddedToRoleEvent(UserAddedToRoleEvent e)
+        {
+            if (_roles == null)
+            {
+                _roles = new List<string>();
+            }
+            if (!_roles.Contains(e.Role))
+            {
+                _roles.Add(e.Role);
+            }
+        }
+
+        protected void OnUserRemovedFromRoleEvent(UserRemovedFromRoleEvent e)
+        {
+            if (_roles != null && _roles.Contains(e.Role))
+            {
+                _roles.Remove(e.Role);
+            }
         }
 
         static string EncodePassword(string originalPassword)

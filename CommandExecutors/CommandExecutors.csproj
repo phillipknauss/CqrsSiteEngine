@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="User\UserRoleCommandExecutors.cs" />
     <Compile Include="User\InvalidateUserCommandExecutor.cs" />
     <Compile Include="User\ValidateUserCommandExecutor.cs" />
     <Compile Include="User\SetUserPasswordCommandExecutor.cs" />

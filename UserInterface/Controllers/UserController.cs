@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace UserInterface.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class UserController : Controller
     {
         //
@@ -44,24 +45,19 @@ namespace UserInterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Commands.CreateUserCommand command)
+        public ActionResult Add(Models.UserModel item)
         {
             var service = new Commanding.SimpleTwitterCommandServiceClient();
-            service.CreateUser(command);
+            service.CreateUser(new Commands.CreateUserCommand()
+                {
+                    Username = item.Username
+                });
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(string userId="")
         {
-            ViewBag.EditableProperties = new List<ReadModel.UserProperty>()
-            {
-                new ReadModel.UserProperty("FirstName", null, "text", "text"),
-                new ReadModel.UserProperty("LastName", null, "text", "text"),
-                new ReadModel.UserProperty("Email", null, "text", "email"),
-                new ReadModel.UserProperty("IsAdmin", null, "checkbox", null)
-            };
-
             var idGuid = Guid.Empty;
 
             if (!Guid.TryParse(userId, out idGuid))
@@ -72,19 +68,40 @@ namespace UserInterface.Controllers
             var service = new ReadModelService.SimpleTwitterReadModelServiceClient();
             var query = service.GetUsers().SingleOrDefault(n => n.Id == idGuid);
 
-            return View(query);
+            return View(Models.UserModel.FromReadModel(query));
         }
 
         [HttpPost]
-        public ActionResult Edit(ReadModel.UserIndexItem item)
+        public ActionResult Edit(Models.UserModel item)
         {
-            foreach (var property in item.Properties)
+            var properties = new List<string>()
             {
+                "Username",
+                "FirstName",
+                "LastName",
+                "Email",
+                "IsAdmin"
+            };
+
+            foreach (var property in properties)
+            {
+                var propInfo = item.GetType().GetProperty(property);
+                if (propInfo == null)
+                {
+                    continue;
+                }
+                
+                var val = propInfo.GetValue(item, null);
+                if (val == null)
+                {
+                    continue;
+                }
+
                 SetProperty(new Commands.SetUserPropertyCommand
-                                {
+                {
                     UserID = item.Id,
-                    Name = property.Key,
-                    Value = property.Value.Value
+                    Name = property,
+                    Value = val.ToString()
                 });
             }
 
@@ -94,6 +111,26 @@ namespace UserInterface.Controllers
         static void SetProperty(Commands.SetUserPropertyCommand command)
         {
             var service = new Commanding.SimpleTwitterCommandServiceClient();
+            if (command.Name == "IsAdmin")
+            {
+                if (command.Value == true.ToString())
+                {
+                    service.AddUserToRole(new Commands.AddUserToRoleCommand()
+                        {
+                            UserID = command.UserID,
+                            Role = "Admin"
+                        });
+                }
+                else
+                {
+                    service.RemoveUserFromRole(new Commands.RemoveUserFromRoleCommand()
+                        {
+                            UserID = command.UserID,
+                            Role = "Admin"
+                        });
+                }
+            }
+            
             service.SetUserProperty(command);
         }
 
@@ -150,6 +187,8 @@ namespace UserInterface.Controllers
 
             return View(result);
         }
+
+        
     }
 
 }

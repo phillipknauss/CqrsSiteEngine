@@ -44,6 +44,12 @@ namespace CommandServiceLibrary
         [OperationContract]
         void InvalidateUser(InvalidateUserCommand command);
 
+        [OperationContract]
+        void AddUserToRole(AddUserToRoleCommand command);
+
+        [OperationContract]
+        void RemoveUserFromRole(RemoveUserFromRoleCommand command);
+
         #endregion
     }
 }

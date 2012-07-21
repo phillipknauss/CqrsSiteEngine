@@ -28,6 +28,8 @@ namespace Eventing
                             typeof (Events.UserPasswordSetEvent),
                             typeof(Events.UserValidatedEvent),
                             typeof(Events.UserInvalidatedEvent),
+                            typeof(Events.UserAddedToRoleEvent),
+                            typeof(Events.UserRemovedFromRoleEvent),
                             typeof (MessageContract)
                         }.ToArray();
 

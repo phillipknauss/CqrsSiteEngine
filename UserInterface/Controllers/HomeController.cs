@@ -6,7 +6,7 @@ namespace UserInterface.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to kick-start your ASP.NET MVC application.";
+            ViewBag.Message = "Welcome to the CQRS Site Engine!";
 
             return View();
         }

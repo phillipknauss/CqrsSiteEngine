@@ -1,5 +1,9 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using System;
+using System.Web;
+using System.Web.Security;
+using System.Security.Principal;
 
 namespace UserInterface
 {
@@ -22,6 +26,22 @@ namespace UserInterface
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
+        }
+
+        protected void Application_AuthenticateRequest(object send, EventArgs e)
+        {
+            if (HttpContext.Current.User != null
+                && HttpContext.Current.User.Identity.IsAuthenticated
+                && HttpContext.Current.User.Identity is FormsIdentity)
+            {
+                FormsIdentity id =
+                    (FormsIdentity)HttpContext.Current.User.Identity;
+                FormsAuthenticationTicket ticket = id.Ticket;
+
+                string userData = ticket.UserData;
+                string[] roles = userData.Split(',');
+                HttpContext.Current.User = new GenericPrincipal(id, roles);
+            }
         }
 
         protected void Application_Start()

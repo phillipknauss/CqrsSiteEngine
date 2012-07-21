@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channel\ChannelCreatedEvent.cs" />
+    <Compile Include="User\UserRoleEvents.cs" />
     <Compile Include="User\UserInvalidatedEvent.cs" />
     <Compile Include="User\UserValidatedEvent.cs" />
     <Compile Include="User\UserPasswordSetEvent.cs" />

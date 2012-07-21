@@ -182,4 +182,64 @@ namespace ReadModel.Denormalizers
             store.Save(model);
         }
     }
+
+    public class UserIndexAddedToRoleDenormalizer : IEventHandler<UserAddedToRoleEvent>
+    {
+        public void Handle(IPublishedEvent<UserAddedToRoleEvent> evnt)
+        {
+            Handle(evnt.Payload);
+        }
+        public void Handle(UserAddedToRoleEvent evnt)
+        {
+            var store = Ncqrs.NcqrsEnvironment.Get<IReadModelStore>();
+
+            var model = store.GetReadModel<UserIndexReadModel>();
+
+            var items = model.Get("items") as List<UserIndexItem>;
+
+            var user = items.Where(n => n.Id == evnt.UserID).ToList().SingleOrDefault();
+
+            if (!user.Roles.Contains(evnt.Role))
+            {
+                user.Roles.Add(evnt.Role);
+            }
+
+            store.Save(model);
+        }
+
+        public void DenormalizeEvent(UserAddedToRoleEvent evnt)
+        {
+            Handle(evnt);
+        }
+    }
+
+    public class UserIndexRemovedFromDenormalizer : IEventHandler<UserRemovedFromRoleEvent>
+    {
+        public void Handle(IPublishedEvent<UserRemovedFromRoleEvent> evnt)
+        {
+            Handle(evnt.Payload);
+        }
+        public void Handle(UserRemovedFromRoleEvent evnt)
+        {
+            var store = Ncqrs.NcqrsEnvironment.Get<IReadModelStore>();
+
+            var model = store.GetReadModel<UserIndexReadModel>();
+
+            var items = model.Get("items") as List<UserIndexItem>;
+
+            var user = items.Where(n => n.Id == evnt.UserID).ToList().SingleOrDefault();
+
+            if (user.Roles.Contains(evnt.Role))
+            {
+                user.Roles.Remove(evnt.Role);
+            }
+
+            store.Save(model);
+        }
+
+        public void DenormalizeEvent(UserRemovedFromRoleEvent evnt)
+        {
+            Handle(evnt);
+        }
+    }
 }
